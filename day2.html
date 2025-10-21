@@ -3,34 +3,58 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Day 2 | A Little Note for You</title>
+  <title>Day 2 Unlock Page</title>
   <style>
     body {
-      margin: 0;
-      background: #141329;
-      color: #fff;
-      font-family: 'Poppins', monospace;
+      background-color: #0b0b1b;
+      color: white;
+      font-family: 'Courier New', monospace;
       text-align: center;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      padding: 100px 20px;
+    }
+    #locked, #unlocked {
+      display: none;
+    }
+    #locked {
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    #unlocked {
+      animation: fadeIn 2s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
     }
   </style>
 </head>
 <body>
+  <!-- Message before unlock -->
+  <div id="locked">
+    This page unlocks on Wed Oct 22 2025.
+  </div>
+
+  <!-- Hidden content that unlocks later -->
+  <div id="unlocked">
+    <h1>Day 2: A Little Note for You 💌</h1>
+    <p>Hey Faizan My Budduu 🧡.....</p>
+    <p>
+      Here’s a little note for Day 2: Bus itna hi kehna hai ki tere jaisa bestfriend pakar mai bhoootttt bhooot bhoot zyada Khush hu,
+      Tum jaise ho mujhe waise hi pasand ho or hamesha rahoge chahe jo bhi ho jaai. Thanks for being you! 😊
+      Mujhe chhod ke mat jana kabhi, I Like You and Love You 💗
+    </p>
+  </div>
+
   <script>
-    // Strict lock: No page content loads at all before unlock
-    var unlockDate = new Date(2025, 9, 22); // October 22, 2025
-    var today = new Date();
-    if (today < unlockDate) {
-      document.write('<h2 style="color:#fff;text-align:center;margin-top:20vh">This page unlocks on ' + unlockDate.toDateString() + '.</h2>');
-      throw '';
+    // Set unlock date (24-hour format: year, month (0-11), day, hour, minute)
+    const unlockDate = new Date("October 22, 2025 00:00:00").getTime();
+    const now = new Date().getTime();
+
+    if (now >= unlockDate) {
+      document.getElementById("unlocked").style.display = "block";
+    } else {
+      document.getElementById("locked").style.display = "block";
     }
-    // All content for the unlocked page goes down here, after the script block
   </script>
-  <!-- Only the message above renders before unlock.
-       After the date, you can put your real content here. -->
 </body>
 </html>
