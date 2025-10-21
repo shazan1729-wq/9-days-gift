@@ -59,6 +59,17 @@
   </style>
 </head>
 <body>
+  <!-- Date-lock: allow this page only on or after Oct 21, 2025 -->
+  <script>
+    // Months: 0 = Jan, ..., 9 = Oct
+    var unlockDate = new Date(2025, 9, 21); // October 21, 2025
+    var today = new Date();
+    if (today < unlockDate) {
+      document.body.innerHTML = '<h2 style="color:#fff;text-align:center;margin-top:20vh">This page unlocks on ' + unlockDate.toDateString() + '.</h2>';
+      document.body.style.background='#141329';
+      throw '';
+    }
+  </script>
   <h1>Day 1: Start of Something Special 💫</h1>
   <div id="message"></div>
   <div id="paragraph"></div>
