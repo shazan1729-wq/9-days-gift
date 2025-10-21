@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Day 4 | Hidden Messages 💌</title>
   <style>
     body {
@@ -85,6 +85,17 @@
   </style>
 </head>
 <body>
+  <!-- Date-lock: only unlock on/after October 24, 2025 -->
+  <script>
+    var unlockDate = new Date(2025, 9, 24); // October 24, 2025
+    var today = new Date();
+    if (today < unlockDate) {
+      document.body.innerHTML = '<h2 style="color:#fff;text-align:center;margin-top:20vh">This page unlocks on ' + unlockDate.toDateString() + '.</h2>';
+      document.body.style.background = '#141329';
+      throw '';
+    }
+  </script>
+
   <h1>Day 4: Hidden Messages for Budduu 💌</h1>
   <p>Click each box to reveal what I truly think about you 💖</p>
 
@@ -98,7 +109,6 @@
     <div class="box" onclick="reveal(this, 6)">😎</div>
     <div class="box" onclick="reveal(this, 7)">🧡</div>
     <div class="box" onclick="reveal(this, 8)">🌍</div>
-
   </div>
 
   <button onclick="nextDay()">Next ➜</button>
@@ -115,7 +125,6 @@
       "You’re a walking good-vibes generator 😎",
       "No one can replace you, Faizan no one 🧡 ",
       "You deserve all the happiness in the world 🌍"
-
     ];
 
     function reveal(box, index) {
