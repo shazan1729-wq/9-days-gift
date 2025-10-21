@@ -20,14 +20,12 @@
       height: 100vh;
       overflow: hidden;
     }
-
     h1 {
       font-size: 2rem;
       margin-bottom: 1rem;
       text-shadow: 0 0 20px rgba(255,255,255,0.8);
       animation: fadeIn 2s forwards;
     }
-
     #message {
       font-size: 1.2rem;
       max-width: 650px;
@@ -36,7 +34,6 @@
       overflow: hidden;
       animation: blink 0.7s step-end infinite alternate;
     }
-
     #paragraph {
       font-size: 1.1rem;
       max-width: 650px;
@@ -45,7 +42,6 @@
       opacity: 0;
       transition: opacity 1s ease;
     }
-
     button {
       margin-top: 2rem;
       background: #fff;
@@ -57,13 +53,11 @@
       cursor: pointer;
       transition: 0.3s;
     }
-
     button:hover {
       background: #ff0080;
       color: #fff;
       transform: scale(1.1);
     }
-
     footer {
       position: absolute;
       bottom: 15px;
@@ -71,16 +65,13 @@
       opacity: 0.8;
       font-size: 0.85rem;
     }
-
     @keyframes blink {
       50% { border-color: transparent; }
     }
-
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(15px); }
       to { opacity: 1; transform: translateY(0); }
     }
-
     @keyframes gradientMove {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
@@ -89,6 +80,16 @@
   </style>
 </head>
 <body>
+  <!-- Date-lock: allow this page only on or after Oct 22, 2025 -->
+  <script>
+    var unlockDate = new Date(2025, 9, 22); // October 22, 2025
+    var today = new Date();
+    if (today < unlockDate) {
+      document.body.innerHTML = '<h2 style="color:#fff;text-align:center;margin-top:20vh">This page unlocks on ' + unlockDate.toDateString() + '.</h2>';
+      document.body.style.background='#141329';
+      throw '';
+    }
+  </script>
   <h1>Day 2: A Little Note for You 💌</h1>
   <div id="message"></div>
   <div id="paragraph"></div>
@@ -97,10 +98,8 @@
 
   <script>
     const firstLine = "Hey Faizan My Budduu 🧡.....";
-    const paragraphText = "Here’s a little note for Day 2: Bus itna hi khena hai ki tere jaisa bestfriend pakar mai bhoootttt bhooot bhoot zyada Khush hu, Tum jaise ho mujhe waise hi pasand ho or hamesha rahoge chahe jo bhi ho jaai. Thanks for being you! 😊 .  And also you are mine chahe jo bhi ho jai 🥹, Mujhe chood ke mat jana kabhi, I Like You and Love You 💗" ;
-
+    const paragraphText = "Here’s a little note for Day 2: Bus itna hi khena hai ki tere jaisa bestfriend pakar mai bhoootttt bhooot bhoot zyada Khush hu, Tum jaise ho mujhe waise hi pasand ho or hamesha rahoge chahe jo bhi ho jaai. Thanks for being you! 😊 .  And also you are mine chahe jo bhi ho jai 🥹, Mujhe chood ke mat jana kabhi, I Like You and Love You 💗";
     let index = 0;
-
     function typeWriter() {
       if (index < firstLine.length) {
         document.getElementById('message').innerHTML += firstLine.charAt(index);
@@ -110,17 +109,14 @@
         showParagraph();
       }
     }
-
     function showParagraph() {
       const para = document.getElementById('paragraph');
       para.textContent = paragraphText;
       para.style.opacity = 1;
     }
-
     function nextDay() {
       window.location.href = 'day3.html';
     }
-
     window.onload = typeWriter;
   </script>
 </body>
