@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Day 8 - Mini Memory Gallery 💖</title>
   <style>
     body {
@@ -114,17 +114,25 @@
   </style>
 </head>
 <body>
+  <!-- Date-lock: Unlock Day 8 on or after October 28, 2025 -->
+  <script>
+    var unlockDate = new Date(2025, 9, 28); // October 28, 2025 (month is 0-based)
+    var today = new Date();
+    if (today < unlockDate) {
+      document.body.innerHTML = '<h2 style="color:#fff; text-align:center; margin-top:20vh;">This page unlocks on ' + unlockDate.toDateString() + '.</h2>';
+      document.body.style.background = '#141329';
+      throw '';
+    }
+  </script>
 
-  <h1>💞 Mini Photo & Messege  Gallery  💞
-flip it </h1>
-
+  <h1>💞 Mini Photo & Messege Gallery 💞 flip it </h1>
 
   <div class="gallery-container">
     <div class="photo-card" id="photoCard">
       <div class="front" id="frontPhoto"></div>
       <div class="back" id="backText">
         <h2>Memory 1</h2>
-        <p>That smile, that my favorite frame 💫</p>
+        <p>That smile, thats my cuteeee paieeee 😉 </p>
       </div>
     </div>
     <button class="next-btn" id="photo-next" onclick="nextPhoto()">Next ➜</button>
@@ -136,7 +144,7 @@ flip it </h1>
       { img: 'image.jpg', text: 'That smile, thats my cuteeee paieeee 😉 ' },
       { img: 'shid.jpg', text: 'I want to hug you as same as this image shows 🧡' },
       { img: 'shid2.jpg', text: 'I think thats our future If I died because of some reasons, Can you be my childrens Buddy Uncle 😅' },
-      { img: 'shid3.jpg', text: 'Thats us in Real Life Teddy 🧸 & Buddy  🧡' }
+      { img: 'shid3.jpg', text: 'Thats us in Real Life Teddy 🧸 & Buddy 🧡' }
     ];
 
     let current = 0;
