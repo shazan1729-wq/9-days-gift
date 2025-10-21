@@ -19,7 +19,6 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      overflow: hidden;
     }
 
     @keyframes gradientMove {
@@ -41,7 +40,7 @@
       max-width: 650px;
       line-height: 1.7;
       border-right: 2px solid #fff;
-      white-space: pre-wrap; /* keeps line breaks */
+      white-space: pre-line;
       overflow: hidden;
       animation: typing 20s steps(100, end), blink 0.6s step-end infinite alternate;
     }
@@ -89,27 +88,21 @@
   </style>
 </head>
 <body>
-  <!-- Date-lock: unlock on or after October 26, 2025 -->
   <script>
-    var unlockDate = new Date(2025, 9, 26);
+    // Date lock: no content before October 27, 2025
+    var unlockDate = new Date(2025, 9, 27);
     var today = new Date();
     if (today < unlockDate) {
-      document.body.innerHTML = '<h2 style="color:#fff;text-align:center;margin-top:20vh">This page unlocks on ' + unlockDate.toDateString() + '.</h2>';
-      document.body.style.background = '#141329';
+      document.write('<h2 style="color:#fff;text-align:center;margin-top:20vh">This page unlocks on ' + unlockDate.toDateString() + '.</h2>');
+      document.body.style.background='#141329';
       throw '';
     }
   </script>
-
   <h1>Day 6: A Letter to My Budduu 😉🧡💌</h1>
-
   <div id="letter"></div>
-
   <audio id="bg-music" src="https://cdn.pixabay.com/audio/2022/03/15/audio_c5c3e35a58.mp3" autoplay loop></audio>
-
   <button onclick="nextDay()">Next ➜</button>
-
   <footer>Written with ❤️ by Tedduu 🧸</footer>
-
   <script>
     const message = 
 `Dear Faizan My Budduu 🧡....., 💫
@@ -137,7 +130,6 @@ Tedduu 🧸 💌`;
     let i = 0;
     const speed = 50; // typing speed
     const letterDiv = document.getElementById("letter");
-
     function typeLetter() {
       if (i < message.length) {
         letterDiv.innerHTML += message.charAt(i);
@@ -145,11 +137,9 @@ Tedduu 🧸 💌`;
         setTimeout(typeLetter, speed);
       }
     }
-
     function nextDay() {
       window.location.href = "day7.html";
     }
-
     window.onload = typeLetter;
   </script>
 </body>
