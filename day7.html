@@ -108,32 +108,35 @@
   </style>
 </head>
 <body>
+  <div id="locked-message" style="display: none; color: white; margin-top: 20vh; font-size: 1.5rem;">This page unlocks on Mon Oct 27 2025.</div>
+  
+  <div id="quiz-content" style="display: none;">
+    <h1>Day 7 🎮 Fun Quiz About Us</h1>
+    <div class="quiz-container">
+      <div id="quiz">
+        <div class="question" id="question">Loading question...</div>
+        <div class="options" id="options"></div>
+        <div id="result"></div>
+        <button id="next" onclick="nextQuestion()">Next ➜</button>
+        <button id="nextDayBtn" onclick="nextDay()">Go to Day 8 ➜</button>
+      </div>
+    </div>
+
+    <footer>Made with ❤️ by Tedduu 🧸 for Budduu 🧡</footer>
+  </div>
+
   <script>
     // Lock until October 27, 2025
     var unlockDate = new Date(2025, 9, 27); // Month 9 = October
     var today = new Date();
 
+    // Show lock message if the current date is before the unlock date
     if (today < unlockDate) {
-      document.write('<h2 style="color:#fff;text-align:center;margin-top:20vh">This page unlocks on ' + unlockDate.toDateString() + '.</h2>');
-      document.body.style.background = '#141329';
-      throw '';
+      document.getElementById('locked-message').style.display = 'block'; // Show locked message
+    } else {
+      document.getElementById('quiz-content').style.display = 'block'; // Show quiz content
     }
-  </script>
 
-  <h1>Day 7 🎮 Fun Quiz About Us</h1>
-  <div class="quiz-container">
-    <div id="quiz">
-      <div class="question" id="question">Loading question...</div>
-      <div class="options" id="options"></div>
-      <div id="result"></div>
-      <button id="next" onclick="nextQuestion()">Next ➜</button>
-      <button id="nextDayBtn" onclick="nextDay()">Go to Day 8 ➜</button>
-    </div>
-  </div>
-
-  <footer>Made with ❤️ by Tedduu 🧸 for Budduu 🧡</footer>
-
-  <script>
     const quizData = [
       { question: "Who always forgets things first? 😅", options: ["Budduu🧡", "Tedduu🧸", "Both 😝", "None"], answer: "Budduu🧡" },
       { question: "What’s our favorite thing to do together?", options: ["Laugh endlessly 😂", "Talk about random stuff", "Eat Food Together", "Support Each Other", "All of these 💛"], answer: "All of these 💛" },
