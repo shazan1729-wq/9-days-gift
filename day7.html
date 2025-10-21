@@ -108,12 +108,11 @@
   </style>
 </head>
 <body>
-  <!-- Date-lock: unlocks on or after October 27, 2025 -->
   <script>
-    var unlockDate = new Date(2025, 9, 27);
+    var unlockDate = new Date(2025, 9, 28); // October 28, 2025
     var today = new Date();
     if (today < unlockDate) {
-      document.body.innerHTML = '<h2 style="color:#fff;text-align:center;margin-top:20vh">This page unlocks on ' + unlockDate.toDateString() + '.</h2>';
+      document.write('<h2 style="color:#fff;text-align:center;margin-top:20vh">This page unlocks on ' + unlockDate.toDateString() + '.</h2>');
       document.body.style.background = '#141329';
       throw '';
     }
