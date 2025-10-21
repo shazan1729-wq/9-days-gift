@@ -96,17 +96,37 @@
 </head>
 <body>
   <script>
-    // Strict date-lock: block all content until unlocked
-    var unlockDate = new Date(2025, 9, 25); // October 25, 2025
-    var today = new Date();
+    // Lock content until Saturday, October 25, 2025
+    const unlockDate = new Date("2025-10-25T00:00:00"); // Midnight, Oct 25, 2025
+    const today = new Date();
+
     if (today < unlockDate) {
-      document.write('<h2 style="color:#fff;text-align:center;margin-top:20vh">This page unlocks on ' + unlockDate.toDateString() + '.</h2>');
-      document.body.style.background='#141329';
-      throw '';
+      document.write(`
+        <style>
+          body {
+            background: #141329;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            text-align: center;
+            color: #fff;
+            font-family: 'Poppins', sans-serif;
+          }
+          h2 {
+            font-size: 1.6rem;
+            color: #ffffff;
+            text-shadow: 0 0 10px rgba(255,255,255,0.6);
+          }
+        </style>
+        <h2>This page unlocks on Saturday, October 25, 2025.</h2>
+      `);
+      throw new Error("Locked until unlock date");
     }
   </script>
+
   <h1>Day 5: Reasons Why You’re Special 🧡</h1>
-  <p>Faizan, Tedduu's🧸 Budduu🧡, here’s why you mean so much to me 😉</p>
+  <p>Faizan, Tedduu's 🧸 Budduu🧡 — here’s why you mean so much to me 😉</p>
 
   <div class="container">
     <div class="card">1️⃣ You’re honest — no pretending, no fake vibes.💝</div>
@@ -121,6 +141,8 @@
   </div>
 
   <button onclick="nextDay()">Next ➜</button>
+
+  <footer>Saturday ✨ Created with love by Tedduu 🧸</footer>
 
   <script>
     function nextDay() {
