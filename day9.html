@@ -76,57 +76,77 @@
       font-size: 0.9rem;
       opacity: 0.7;
     }
+
+    /* Hidden by default */
+    #mainContent {
+      display: none;
+    }
+
+    /* Unlock message styling */
+    #lockedMessage {
+      font-size: 1.5rem;
+      color: #fff;
+      text-align: center;
+      padding: 20px;
+      line-height: 1.6;
+    }
   </style>
 </head>
 <body>
-<!-- Date-lock: only unlocks on/after October 29, 2025 -->
-<script>
-  var unlockDate = new Date(2025, 9, 29); // October 29, 2025
-  var today = new Date();
-  if (today < unlockDate) {
-    document.write('<h2 style="color:#fff;text-align:center;margin-top:20vh">This page unlocks on ' + unlockDate.toDateString() + '.</h2>');
-    document.body.style.background = '#141329';
-    throw '';
-  }
-</script>
+  <div id="lockedMessage"></div>
 
-<canvas id="fireworks"></canvas>
-<div id="confetti"></div>
+  <div id="mainContent">
+    <canvas id="fireworks"></canvas>
+    <div id="confetti"></div>
+    <h3>Day 9: The Grand Finale Gift ✨</h3>
+    <h1>💫 HAPPY BIRTHDAY MY DEAR BUDDUUUUUUUUU 🧡... 💫</h1>
+    <div id="story"></div>
+    <footer>Made with infinite 💛 by Tedduuu 🧸</footer>
+  </div>
 
-<h3>Day 9: The Grand Finale Gift ✨</h3>
-<h1> 💫 HAPPY BIRTHDAY MY DEAR BUDDUUUUUUUUU 🧡... 💫</h1>
-<div id="story"></div>
+  <script>
+    // Unlock date setup (October 29, 2025)
+    const unlockDate = new Date(2025, 9, 29);
+    const today = new Date();
 
-<footer>Made with infinite 💛 by Tedduuu 🧸</footer>
+    const lockedMsg = document.getElementById("lockedMessage");
+    const mainContent = document.getElementById("mainContent");
 
-<script>
-// Story typing
-const storyLines = [
-  "From day 1 to day 9, every moment was made with care 💫",
-  "Each page had a memory, each  line has smile 😊",
-  "No money, just heart — no distance, just friendship 💛",
-  "You’re more than a best friend, Faizan — you’re my Budduu 💖",
-  "Love you, Budduu 💖"
-];
+    if (today < unlockDate) {
+      // Show only lock message
+      lockedMsg.innerHTML = "🔒 This page will unlock on <br><strong>" + unlockDate.toDateString() + "</strong>.<br><br>Come back soon! 💫";
+      document.body.style.background = "#141329";
+    } else {
+      // Show main content
+      lockedMsg.style.display = "none";
+      mainContent.style.display = "flex";
+      showStory();
+    }
 
-let index = 0;
+    // Story typing
+    const storyLines = [
+      "From day 1 to day 9, every moment was made with care 💫",
+      "Each page had a memory, each line has smile 😊",
+      "No money, just heart — no distance, just friendship 💛",
+      "You’re more than a best friend, Faizan — you’re my Budduu 💖",
+      "Love you, Budduu 💖"
+    ];
 
-function showStory() {
-  if (index < storyLines.length) {
-    const story = document.getElementById("story");
-    story.style.opacity = 1;
-    story.innerHTML += storyLines[index] + "\n";
-    index++;
-    setTimeout(showStory, 2500);
-  } else {
-    startFireworks();
-    startConfetti();
-  }
-}
+    let index = 0;
 
-window.onload = showStory;
-
-// Fireworks effect and Confetti scripts go here (assuming you have them from previous code)
-</script>
+    function showStory() {
+      if (index < storyLines.length) {
+        const story = document.getElementById("story");
+        story.style.opacity = 1;
+        story.innerHTML += storyLines[index] + "\n";
+        index++;
+        setTimeout(showStory, 2500);
+      } else {
+        // Start fireworks/confetti after story
+        // startFireworks();
+        // startConfetti();
+      }
+    }
+  </script>
 </body>
 </html>
