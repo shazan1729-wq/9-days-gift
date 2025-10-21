@@ -8,9 +8,6 @@
     body {
       margin: 0;
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #007bff, #8e2de2, #ff0080);
-      background-size: 200% 200%;
-      animation: gradientMove 8s ease infinite;
       color: #fff;
       text-align: center;
       display: flex;
@@ -19,6 +16,20 @@
       align-items: center;
       height: 100vh;
       overflow: hidden;
+      transition: background 1s ease;
+    }
+
+    /* Default (quiz) background */
+    body.quiz-bg {
+      background: linear-gradient(135deg, #007bff, #8e2de2, #ff0080);
+      background-size: 200% 200%;
+      animation: gradientMove 8s ease infinite;
+    }
+
+    /* Locked screen background — replace colors below with your image colors */
+    body.locked-bg {
+      background: linear-gradient(135deg, #141E30, #243B55);
+      /* Example: dark blue-purple tones (like from a night-sky or cool photo) */
     }
 
     @keyframes gradientMove {
@@ -105,10 +116,19 @@
       from { text-shadow: 0 0 10px #fff, 0 0 25px #fff; }
       to { text-shadow: 0 0 25px #fff, 0 0 50px #fff; }
     }
+
+    #locked-message {
+      display: none;
+      color: white;
+      text-align: center;
+      font-size: 1.5rem;
+      padding: 20px;
+      line-height: 1.5;
+    }
   </style>
 </head>
 <body>
-  <div id="locked-message" style="display: none; color: white; margin-top: 20vh; font-size: 1.5rem;">This page unlocks on Mon Oct 27 2025.</div>
+  <div id="locked-message">This page unlocks on Mon Oct 27 2025.</div>
   
   <div id="quiz-content" style="display: none;">
     <h1>Day 7 🎮 Fun Quiz About Us</h1>
@@ -130,11 +150,12 @@
     var unlockDate = new Date(2025, 9, 27); // Month 9 = October
     var today = new Date();
 
-    // Show lock message if the current date is before the unlock date
     if (today < unlockDate) {
-      document.getElementById('locked-message').style.display = 'block'; // Show locked message
+      document.body.classList.add("locked-bg");
+      document.getElementById('locked-message').style.display = 'block';
     } else {
-      document.getElementById('quiz-content').style.display = 'block'; // Show quiz content
+      document.body.classList.add("quiz-bg");
+      document.getElementById('quiz-content').style.display = 'block';
     }
 
     const quizData = [
