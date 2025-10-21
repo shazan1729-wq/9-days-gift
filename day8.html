@@ -103,6 +103,7 @@
     }
     #photo-next { bottom: -60px; }
     #day9-next { bottom: -110px; }
+
     h1 {
       position: absolute;
       top: 20px;
@@ -115,7 +116,8 @@
 </head>
 <body>
   <script>
-    var unlockDate = new Date(2025, 9, 28); // October 28, 2025 (month is 0-based)
+    // Lock until October 28, 2025
+    var unlockDate = new Date(2025, 9, 28); // Month 9 = October
     var today = new Date();
     if (today < unlockDate) {
       document.write('<h2 style="color:#fff; text-align:center; margin-top:20vh;">This page unlocks on ' + unlockDate.toDateString() + '.</h2>');
@@ -124,14 +126,14 @@
     }
   </script>
 
-  <h1>💞 Mini Photo & Messege Gallery 💞 flip it </h1>
+  <h1>💞 Mini Photo & Message Gallery 💞 (Flip the card!)</h1>
 
   <div class="gallery-container">
     <div class="photo-card" id="photoCard">
       <div class="front" id="frontPhoto"></div>
       <div class="back" id="backText">
         <h2>Memory 1</h2>
-        <p>That smile, thats my cuteeee paieeee 😉</p>
+        <p>That smile, that’s my cuteeee paieeee 😉</p>
       </div>
     </div>
     <button class="next-btn" id="photo-next" onclick="nextPhoto()">Next ➜</button>
@@ -140,10 +142,10 @@
 
   <script>
     const photos = [
-      { img: 'image.jpg', text: 'That smile, thats my cuteeee paieeee 😉' },
+      { img: 'image.jpg', text: 'That smile, that’s my cuteeee paieeee 😉' },
       { img: 'shid.jpg', text: 'I want to hug you as same as this image shows 🧡' },
-      { img: 'shid2.jpg', text: 'I think thats our future If I died because of some reasons, Can you be my childrens Buddy Uncle 😅' },
-      { img: 'shid3.jpg', text: 'Thats us in Real Life Teddy 🧸 & Buddy 🧡' }
+      { img: 'shid2.jpg', text: 'I think that’s our future 😅 If I ever die someday, can you be my children’s Buddy Uncle? 🧸' },
+      { img: 'shid3.jpg', text: 'That’s us in real life — Teddy 🧸 & Buddy 🧡' }
     ];
 
     let current = 0;
@@ -173,6 +175,5 @@
       window.location.href = "day9.html";
     }
   </script>
-
 </body>
 </html>
