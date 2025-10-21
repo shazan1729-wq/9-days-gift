@@ -75,6 +75,16 @@
   </style>
 </head>
 <body>
+  <!-- Date-lock: Only unlocks on or after Oct 23, 2025 -->
+  <script>
+    var unlockDate = new Date(2025, 9, 23); // October 23, 2025
+    var today = new Date();
+    if (today < unlockDate) {
+      document.body.innerHTML = '<h2 style="color:#fff;text-align:center;margin-top:20vh">This page unlocks on ' + unlockDate.toDateString() + '.</h2>';
+      document.body.style.background='#141329';
+      throw '';
+    }
+  </script>
   <h1>Day 3: Compliment Generator ✨</h1>
   <p>Click the button below to get a random compliment, Budduu!</p>
 
