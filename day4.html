@@ -85,17 +85,16 @@
   </style>
 </head>
 <body>
-  <!-- Date-lock: only unlock on/after October 24, 2025 -->
   <script>
+    // Strict date-lock: don't render content if locked
     var unlockDate = new Date(2025, 9, 24); // October 24, 2025
     var today = new Date();
     if (today < unlockDate) {
-      document.body.innerHTML = '<h2 style="color:#fff;text-align:center;margin-top:20vh">This page unlocks on ' + unlockDate.toDateString() + '.</h2>';
-      document.body.style.background = '#141329';
+      document.write('<h2 style="color:#fff;text-align:center;margin-top:20vh">This page unlocks on ' + unlockDate.toDateString() + '.</h2>');
+      document.body.style.background='#141329';
       throw '';
     }
   </script>
-
   <h1>Day 4: Hidden Messages for Budduu 💌</h1>
   <p>Click each box to reveal what I truly think about you 💖</p>
 
