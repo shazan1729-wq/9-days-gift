@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Day 5 | Reasons Why You’re Special 💛</title>
+
   <style>
     body {
       margin: 0;
@@ -94,37 +95,8 @@
     }
   </style>
 </head>
-<body>
-  <script>
-    // Lock content until Saturday, October 25, 2025
-    const unlockDate = new Date("2025-10-25T00:00:00"); // Midnight, Oct 25, 2025
-    const today = new Date();
 
-    if (today < unlockDate) {
-      document.write(`
-        <style>
-          body {
-            background: #141329;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            text-align: center;
-            color: #fff;
-            font-family: 'Poppins', sans-serif;
-          }
-          h2 {
-            font-size: 1.6rem;
-            color: #ffffff;
-            text-shadow: 0 0 10px rgba(255,255,255,0.6);
-          }
-        </style>
-        <h2>This page unlocks on Saturday, October 25, 2025.</h2>
-      `);
-      throw new Error("Locked until unlock date");
-    }
-  </script>
-
+<body style="display:none;" id="mainBody">
   <h1>Day 5: Reasons Why You’re Special 🧡</h1>
   <p>Faizan, Tedduu's 🧸 Budduu🧡 — here’s why you mean so much to me 😉</p>
 
@@ -141,15 +113,40 @@
   </div>
 
   <button onclick="nextDay()">Next ➜</button>
-
   <footer>Saturday ✨ Created with love by Tedduu 🧸</footer>
 
   <script>
+    const unlockDate = new Date("2025-10-25T00:00:00");
+    const today = new Date();
+
+    if (today < unlockDate) {
+      document.body.style.display = "flex";
+      document.body.innerHTML = `
+        <div style="
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          height: 100vh;
+          width: 100%;
+          text-align: center;
+          background: #141329;
+          color: #fff;
+          font-family: 'Poppins', sans-serif;
+        ">
+          <h2 style="font-size:1.6rem;text-shadow:0 0 10px rgba(255,255,255,0.6);">
+            This page unlocks on Saturday, October 25, 2025.
+          </h2>
+        </div>
+      `;
+      throw new Error("Locked until unlock date");
+    } else {
+      document.getElementById("mainBody").style.display = "block";
+    }
+
     function nextDay() {
       window.location.href = "day6.html";
     }
   </script>
 </body>
 </html>
-
-
