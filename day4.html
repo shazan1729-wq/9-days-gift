@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Day 4 | Hidden Messages 💌</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #007bff, #8e2de2, #ff0080);
+      background-size: 200% 200%;
+      animation: gradientMove 8s ease infinite;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      text-align: center;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 120px);
+      grid-gap: 15px;
+      margin-top: 20px;
+    }
+
+    .box {
+      background: rgba(255,255,255,0.2);
+      border-radius: 12px;
+      height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.3s;
+      backdrop-filter: blur(5px);
+      color: #fff;
+    }
+
+    .box:hover {
+      background: rgba(255,255,255,0.3);
+      transform: scale(1.05);
+    }
+
+    button {
+      margin-top: 30px;
+      background: #fff;
+      color: #8e2de2;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(255,255,255,0.6);
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #ff0080;
+      color: #fff;
+      transform: scale(1.1);
+    }
+
+    footer {
+      position: absolute;
+      bottom: 15px;
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Day 4: Hidden Messages for Budduu 💌</h1>
+  <p>Click each box to reveal what I truly think about you 💖</p>
+
+  <div class="grid">
+    <div class="box" onclick="reveal(this, 0)">🧸</div>
+    <div class="box" onclick="reveal(this, 1)">💫</div>
+    <div class="box" onclick="reveal(this, 2)">💝</div>
+    <div class="box" onclick="reveal(this, 3)">💛</div>
+    <div class="box" onclick="reveal(this, 4)">🌟</div>
+    <div class="box" onclick="reveal(this, 5)">⚡</div>
+    <div class="box" onclick="reveal(this, 6)">😎</div>
+    <div class="box" onclick="reveal(this, 7)">🧡</div>
+    <div class="box" onclick="reveal(this, 8)">🌍</div>
+
+  </div>
+
+  <button onclick="nextDay()">Next ➜</button>
+  <footer>Created with ❤️ by Tedduu 🧸</footer>
+
+  <script>
+    const messages = [
+      "I am your's Teddy forever My Buddu 🧸",
+      "You make even silence feel special 💫",
+      "Your friendship is my favorite gift 💝",
+      "Budduu, you have the kindest heart 💛",
+      "Faizan you come in my life to give true value of every thing 🌟",
+      "You’re pure energy wrapped in goodness ⚡",
+      "You’re a walking good-vibes generator 😎",
+      "No one can replace you, Faizan no one 🧡 ",
+      "You deserve all the happiness in the world 🌍"
+
+    ];
+
+    function reveal(box, index) {
+      box.innerText = messages[index];
+      box.style.background = "rgba(255,255,255,0.4)";
+      box.style.color = "#000";
+      box.style.fontSize = "14px";
+    }
+
+    function nextDay() {
+      window.location.href = 'day5.html';
+    }
+  </script>
+</body>
+</html>

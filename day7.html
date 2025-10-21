@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Day 7 | Fun Quiz About Us 🎮</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #007bff, #8e2de2, #ff0080);
+      background-size: 200% 200%;
+      animation: gradientMove 8s ease infinite;
+      color: #fff;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    h1 {
+      font-size: 2.2rem;
+      text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+      animation: glow 2s infinite alternate;
+    }
+
+    .quiz-container {
+      background: rgba(255, 255, 255, 0.15);
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 0 25px rgba(255, 255, 255, 0.3);
+      width: 90%;
+      max-width: 500px;
+      margin-top: 20px;
+      backdrop-filter: blur(6px);
+    }
+
+    .question {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+    }
+
+    .options button {
+      display: block;
+      width: 100%;
+      background: #fff;
+      color: #8e2de2;
+      border: none;
+      border-radius: 8px;
+      margin: 8px 0;
+      padding: 12px;
+      font-size: 1rem;
+      cursor: pointer;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .options button:hover {
+      background: #ff0080;
+      color: #fff;
+      transform: scale(1.05);
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      text-shadow: 0 0 10px #fff;
+    }
+
+    button#next, button#nextDayBtn {
+      margin-top: 15px;
+      background: #fff;
+      color: #8e2de2;
+      border: none;
+      padding: 10px 25px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      display: none;
+    }
+
+    button#next:hover, button#nextDayBtn:hover {
+      background: #ff0080;
+      color: #fff;
+    }
+
+    footer {
+      position: absolute;
+      bottom: 10px;
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #fff, 0 0 25px #fff; }
+      to { text-shadow: 0 0 25px #fff, 0 0 50px #fff; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Day 7 🎮 Fun Quiz About Us</h1>
+
+  <div class="quiz-container">
+    <div id="quiz">
+      <div class="question" id="question">Loading question...</div>
+      <div class="options" id="options"></div>
+      <div id="result"></div>
+      <button id="next" onclick="nextQuestion()">Next ➜</button>
+      <button id="nextDayBtn" onclick="nextDay()">Go to Day 8 ➜</button>
+    </div>
+  </div>
+
+  <footer>Made with ❤️ by Tedduu 🧸 for Budduu 🧡</footer>
+
+  <script>
+    const quizData = [
+      { question: "Who always forgets things first? 😅", options: ["Budduu🧡", "Tedduu🧸", "Both 😝", "None"], answer: "Budduu🧡" },
+      { question: "What’s our favorite thing to do together?", options: ["Laugh endlessly 😂", "Talk about random stuff", "Eat Food Together","Support Each Other ", "All of these 💛"], answer: "All of these 💛" },
+      { question: "Who gives the best advice?", options: ["Budduu🧡", "Tedduu🧸", "ChatGPT", "Maam😂"], answer: "Budduu🧡" },
+      { question: "What’s Budduu’s secret superpower?", options: ["Making me smile 😊", "Eating fast 🍕", "Vanishing suddenly 🕵️", "Supporting me anytime when I need  ✨"], answer: "Supporting me anytime when I need" },
+      { question: "If we were a team, our name would be...?", options: ["The Budduu Squad", "#ShaZan", "BudduTedduu's Power 💫", "Dynamic Duo"], answer: "#ShaZan" }
+    ];
+
+    let current = 0;
+    let score = 0;
+
+    const questionEl = document.getElementById("question");
+    const optionsEl = document.getElementById("options");
+    const resultEl = document.getElementById("result");
+    const nextBtn = document.getElementById("next");
+    const nextDayBtn = document.getElementById("nextDayBtn");
+
+    function loadQuestion() {
+      resultEl.textContent = "";
+      nextBtn.style.display = "none";
+      nextDayBtn.style.display = "none";
+      const q = quizData[current];
+      questionEl.textContent = q.question;
+      optionsEl.innerHTML = "";
+      q.options.forEach(opt => {
+        const btn = document.createElement("button");
+        btn.textContent = opt;
+        btn.onclick = () => checkAnswer(opt);
+        optionsEl.appendChild(btn);
+      });
+    }
+
+    function checkAnswer(selected) {
+      const correct = quizData[current].answer;
+      if (selected === correct) {
+        resultEl.textContent = "✅ Correct!";
+        score++;
+      } else {
+        resultEl.textContent = "❌ Oops! It was: " + correct;
+      }
+      Array.from(optionsEl.children).forEach(btn => btn.disabled = true);
+      if (current < quizData.length - 1) {
+        nextBtn.style.display = "inline-block";
+      } else {
+        nextDayBtn.style.display = "inline-block";
+      }
+    }
+
+    function nextQuestion() {
+      current++;
+      if (current < quizData.length) {
+        loadQuestion();
+      }
+    }
+
+    function nextDay() {
+      showFinal();
+      setTimeout(() => {
+        window.location.href = "day8.html";
+      }, 1200);
+    }
+
+    function showFinal() {
+      questionEl.textContent = "🎉 Quiz Complete!";
+      optionsEl.innerHTML = "";
+      resultEl.innerHTML = `You got <b>${score}</b> out of <b>${quizData.length}</b> right, Budduu!<br><br>
+      No matter the score — we both win 💛 because our friendship is the best combo ever! 🫶`;
+      nextBtn.style.display = "none";
+      nextDayBtn.style.display = "inline-block";
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>

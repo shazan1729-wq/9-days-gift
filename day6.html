@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Day 6 | A Letter to Budduu 💌</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #007bff, #8e2de2, #ff0080);
+      background-size: 200% 200%;
+      animation: gradientMove 8s ease infinite;
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      text-shadow: 0 0 20px rgba(255,255,255,0.8);
+      animation: fadeIn 2s ease forwards;
+    }
+
+    #letter {
+      font-size: 1.1rem;
+      width: 80%;
+      max-width: 650px;
+      line-height: 1.7;
+      border-right: 2px solid #fff;
+      white-space: pre-wrap; /* keeps line breaks */
+      overflow: hidden;
+      animation: typing 20s steps(100, end), blink 0.6s step-end infinite alternate;
+    }
+
+    button {
+      margin-top: 40px;
+      background: #fff;
+      color: #8e2de2;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(255,255,255,0.7);
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #ff0080;
+      color: #fff;
+      transform: scale(1.1);
+    }
+
+    footer {
+      position: absolute;
+      bottom: 10px;
+      font-size: 0.9rem;
+      opacity: 0.8;
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    @keyframes blink {
+      from { border-color: transparent; }
+      to { border-color: white; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <h1>Day 6: A Letter to My Budduu 😉🧡💌</h1>
+
+  <div id="letter"></div>
+
+  <audio id="bg-music" src="https://cdn.pixabay.com/audio/2022/03/15/audio_c5c3e35a58.mp3" autoplay loop></audio>
+
+  <button onclick="nextDay()">Next ➜</button>
+
+  <footer>Written with ❤️ by Tedduu 🧸</footer>
+
+  <script>
+    const message = 
+`Dear Faizan My Budduu 🧡....., 💫
+
+You might not realize it, but you’ve been one of the best parts of my life.  
+From random talks to deep thoughts — every moment has felt real and comforting.  
+
+You make ordinary days feel special, and even your silence speaks peace.  
+This little 9-day project is my way of saying thank you —  
+for being you, for staying, and for never pretending. 
+
+Some lines of song I want to dedicate you —
+
+	Tum ho to sab achha hai 
+	Tum ho to waqt thama hai
+	Ek duniya sapno si hai 
+	Tum ho to is pe yaqeen hai
+
+You deserve every good thing life has to offer.  
+Stay kind, stay genuine, and never forget — you’re appreciated more than words can express. 🧡  
+
+Yours,  
+Tedduu 🧸 💌`;
+
+    let i = 0;
+    const speed = 50; // typing speed
+    const letterDiv = document.getElementById("letter");
+
+    function typeLetter() {
+      if (i < message.length) {
+        letterDiv.innerHTML += message.charAt(i);
+        i++;
+        setTimeout(typeLetter, speed);
+      }
+    }
+
+    function nextDay() {
+      window.location.href = "day7.html";
+    }
+
+    window.onload = typeLetter;
+  </script>
+</body>
+</html>

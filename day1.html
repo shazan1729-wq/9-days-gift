@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Day 1 | Start of Something Special</title>
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, #007bff, #8e2de2, #ff0080);
+      background-size: 200% 200%;
+      animation: gradientMove 8s ease infinite;
+      color: #fff;
+      font-family: 'Poppins', monospace;
+      text-align: center;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    #message {
+      font-size: 1.2rem;
+      width: 80%;
+      max-width: 650px;
+      border-right: 2px solid #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      animation: blink 0.7s step-end infinite alternate;
+    }
+    #paragraph {
+      font-size: 1.1rem;
+      width: 80%;
+      max-width: 650px;
+      margin-top: 1rem;
+      line-height: 1.6;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+    button {
+      margin-top: 2rem;
+      background: #fff;
+      color: #8e2de2;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover { background: #ff0080; color: #fff; transform: scale(1.1); }
+    footer { position: absolute; bottom: 15px; opacity: 0.8; }
+    @keyframes blink { 50% { border-color: transparent; } }
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+  </style>
+</head>
+<body>
+  <h1>Day 1: Start of Something Special 💫</h1>
+  <div id="message"></div>
+  <div id="paragraph"></div>
+  <button onclick="nextDay()">Next ➜</button>
+  <footer>Created with ❤️ by Tedduu 🧸</footer>
+
+  <script>
+    const firstLine = "Hey Faizan My Budduu 🧡.....";
+    const paragraphText = "Welcome to Day 1. This isn’t just day 1 — it’s the start of a 9-day journey I built for you. No money, no filters, just memories and meaning. Ready to unlock what’s next my cute Budduu 🧡😉 ?";
+    
+    let index = 0;
+    
+    function typeWriter() {
+      if (index < firstLine.length) {
+        document.getElementById('message').innerHTML += firstLine.charAt(index);
+        index++;
+        setTimeout(typeWriter, 45);
+      } else {
+        showParagraph();
+      }
+    }
+
+    function showParagraph() {
+      const para = document.getElementById('paragraph');
+      para.textContent = paragraphText;
+      para.style.opacity = 1;
+    }
+
+    function nextDay() { 
+      window.location.href = 'day2.html'; 
+    }
+
+    window.onload = typeWriter;
+  </script>
+</body>
+</html>
