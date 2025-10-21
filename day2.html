@@ -80,12 +80,12 @@
   </style>
 </head>
 <body>
-  <!-- Date-lock: allow this page only on or after Oct 22, 2025 -->
   <script>
+    // Strict date-lock: don't render content if locked
     var unlockDate = new Date(2025, 9, 22); // October 22, 2025
     var today = new Date();
     if (today < unlockDate) {
-      document.body.innerHTML = '<h2 style="color:#fff;text-align:center;margin-top:20vh">This page unlocks on ' + unlockDate.toDateString() + '.</h2>';
+      document.write('<h2 style="color:#fff;text-align:center;margin-top:20vh">This page unlocks on ' + unlockDate.toDateString() + '.</h2>');
       document.body.style.background='#141329';
       throw '';
     }
