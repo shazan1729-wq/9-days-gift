@@ -96,7 +96,7 @@
 </head>
 <body>
   <script>
-    // Strict date-lock: don't render content if locked
+    // Strict date-lock: block all content until unlocked
     var unlockDate = new Date(2025, 9, 25); // October 25, 2025
     var today = new Date();
     if (today < unlockDate) {
