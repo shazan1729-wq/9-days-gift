@@ -59,13 +59,12 @@
   </style>
 </head>
 <body>
-  <!-- Date-lock: allow this page only on or after Oct 21, 2025 -->
   <script>
-    // Months: 0 = Jan, ..., 9 = Oct
+    // Date-lock: Blocks rest of content if not unlocked
     var unlockDate = new Date(2025, 9, 21); // October 21, 2025
     var today = new Date();
     if (today < unlockDate) {
-      document.body.innerHTML = '<h2 style="color:#fff;text-align:center;margin-top:20vh">This page unlocks on ' + unlockDate.toDateString() + '.</h2>';
+      document.write('<h2 style="color:#fff;text-align:center;margin-top:20vh">This page unlocks on ' + unlockDate.toDateString() + '.</h2>');
       document.body.style.background='#141329';
       throw '';
     }
@@ -79,9 +78,7 @@
   <script>
     const firstLine = "Hey Faizan My Budduu 🧡.....";
     const paragraphText = "Welcome to Day 1. This isn’t just day 1 — it’s the start of a 9-day journey I built for you. No money, no filters, just memories and meaning. Ready to unlock what’s next my cute Budduu 🧡😉 ?";
-    
     let index = 0;
-    
     function typeWriter() {
       if (index < firstLine.length) {
         document.getElementById('message').innerHTML += firstLine.charAt(index);
@@ -91,17 +88,14 @@
         showParagraph();
       }
     }
-
     function showParagraph() {
       const para = document.getElementById('paragraph');
       para.textContent = paragraphText;
       para.style.opacity = 1;
     }
-
     function nextDay() { 
       window.location.href = 'day2.html'; 
     }
-
     window.onload = typeWriter;
   </script>
 </body>
