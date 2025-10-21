@@ -1,1 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Day 2 | A Little Note for You</title>
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(135deg, #007bff, #8e2de2, #ff0080);
+      background-size: 200% 200%;
+      animation: gradientMove 8s ease infinite;
+      color: #fff;
+      font-family: 'Poppins', monospace;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      text-shadow: 0 0 20px rgba(255,255,255,0.8);
+      animation: fadeIn 2s forwards;
+    }
+    #message {
+      font-size: 1.2rem;
+      max-width: 650px;
+      border-right: 2px solid #fff;
+      white-space: nowrap;
+      overflow: hidden;
+      animation: blink 0.7s step-end infinite alternate;
+    }
+    #paragraph {
+      font-size: 1.1rem;
+      max-width: 650px;
+      margin-top: 1rem;
+      line-height: 1.6;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+    button {
+      margin-top: 2rem;
+      background: #fff;
+      color: #8e2de2;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #ff0080;
+      color: #fff;
+      transform: scale(1.1);
+    }
+    footer {
+      position: absolute;
+      bottom: 15px;
+      color: #fff;
+      opacity: 0.8;
+      font-size: 0.85rem;
+    }
+    @keyframes blink {
+      50% { border-color: transparent; }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(15px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+  </style>
+</head>
+<body>
+  <script>
+    // Strict date-lock: don't render content if locked
+    var unlockDate = new Date(2025, 9, 22); // October 22, 2025
+    var today = new Date();
+    if (today < unlockDate) {
+      document.write('<h2 style="color:#fff;text-align:center;margin-top:20vh">This page unlocks on ' + unlockDate.toDateString() + '.</h2>');
+      document.body.style.background='#141329';
+      throw '';
+    }
+  </script>
+  <h1>Day 2: A Little Note for You 💌</h1>
+  <div id="message"></div>
+  <div id="paragraph"></div>
+  <button onclick="nextDay()">Next ➜</button>
+  <footer>Created with ❤️ by Tedduu 🧸</footer>
+
+  <script>
+    const firstLine = "Hey Faizan My Budduu 🧡.....";
+    const paragraphText = "Here’s a little note for Day 2: Bus itna hi khena hai ki tere jaisa bestfriend pakar mai bhoootttt bhooot bhoot zyada Khush hu, Tum jaise ho mujhe waise hi pasand ho or hamesha rahoge chahe jo bhi ho jaai. Thanks for being you! 😊 .  And also you are mine chahe jo bhi ho jai 🥹, Mujhe chood ke mat jana kabhi, I Like You and Love You 💗";
+    let index = 0;
+    function typeWriter() {
+      if (index < firstLine.length) {
+        document.getElementById('message').innerHTML += firstLine.charAt(index);
+        index++;
+        setTimeout(typeWriter, 45);
+      } else {
+        showParagraph();
+      }
+    }
+    function showParagraph() {
+      const para = document.getElementById('paragraph');
+      para.textContent = paragraphText;
+      para.style.opacity = 1;
+    }
+    function nextDay() {
+      window.location.href = 'day3.html';
+    }
+    window.onload = typeWriter;
+  </script>
+</body>
+</html>
+
+
 
