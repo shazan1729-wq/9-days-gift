@@ -20,6 +20,23 @@
       text-align: center;
     }
 
+    #locked {
+      display: none;
+      width: 100%;
+      height: 100vh;
+      background: #141329;
+      color: #fff;
+      font-size: 1.5rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    #main {
+      display: none;
+    }
+
     h1 {
       margin-bottom: 20px;
       text-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
@@ -85,44 +102,55 @@
   </style>
 </head>
 <body>
-  <script>
-    // Strict date-lock: block all content until unlocked
-    var unlockDate = new Date(2025, 9, 24); // October 24, 2025
-    var today = new Date();
-    if (today < unlockDate) {
-      document.write('<h2 style="color:#fff;text-align:center;margin-top:20vh">This page unlocks on ' + unlockDate.toDateString() + '.</h2>');
-      document.body.style.background='#141329';
-      throw '';
-    }
-  </script>
-  <h1>Day 4: Hidden Messages for Budduu 💌</h1>
-  <p>Click each box to reveal what I truly think about you 💖</p>
 
-  <div class="grid">
-    <div class="box" onclick="reveal(this, 0)">🧸</div>
-    <div class="box" onclick="reveal(this, 1)">💫</div>
-    <div class="box" onclick="reveal(this, 2)">💝</div>
-    <div class="box" onclick="reveal(this, 3)">💛</div>
-    <div class="box" onclick="reveal(this, 4)">🌟</div>
-    <div class="box" onclick="reveal(this, 5)">⚡</div>
-    <div class="box" onclick="reveal(this, 6)">😎</div>
-    <div class="box" onclick="reveal(this, 7)">🧡</div>
-    <div class="box" onclick="reveal(this, 8)">🌍</div>
+  <!-- Locked message -->
+  <div id="locked">
+    <h2>This page unlocks on Fri Oct 24 2025.</h2>
   </div>
 
-  <button onclick="nextDay()">Next ➜</button>
-  <footer>Created with ❤️ by Tedduu 🧸</footer>
+  <!-- Main page content -->
+  <div id="main">
+    <h1>Day 4: Hidden Messages for Budduu 💌</h1>
+    <p>Click each box to reveal what I truly think about you 💖</p>
+
+    <div class="grid">
+      <div class="box" onclick="reveal(this, 0)">🧸</div>
+      <div class="box" onclick="reveal(this, 1)">💫</div>
+      <div class="box" onclick="reveal(this, 2)">💝</div>
+      <div class="box" onclick="reveal(this, 3)">💛</div>
+      <div class="box" onclick="reveal(this, 4)">🌟</div>
+      <div class="box" onclick="reveal(this, 5)">⚡</div>
+      <div class="box" onclick="reveal(this, 6)">😎</div>
+      <div class="box" onclick="reveal(this, 7)">🧡</div>
+      <div class="box" onclick="reveal(this, 8)">🌍</div>
+    </div>
+
+    <button onclick="nextDay()">Next ➜</button>
+    <footer>Created with ❤️ by Tedduu 🧸</footer>
+  </div>
 
   <script>
+    // Set unlock date (October 24, 2025)
+    const unlockDate = new Date("October 24, 2025 00:00:00").getTime();
+    const now = new Date().getTime();
+
+    if (now >= unlockDate) {
+      document.getElementById("main").style.display = "block";
+    } else {
+      document.body.style.background = "#141329";
+      document.getElementById("locked").style.display = "flex";
+    }
+
+    // Hidden messages
     const messages = [
-      "I am your's Teddy forever My Buddu 🧸",
+      "I am your Teddy forever, My Buddu 🧸",
       "You make even silence feel special 💫",
       "Your friendship is my favorite gift 💝",
       "Budduu, you have the kindest heart 💛",
-      "Faizan you come in my life to give true value of every thing 🌟",
+      "Faizan, you came into my life to give true meaning to everything 🌟",
       "You’re pure energy wrapped in goodness ⚡",
       "You’re a walking good-vibes generator 😎",
-      "No one can replace you, Faizan no one 🧡 ",
+      "No one can replace you, Faizan — no one 🧡",
       "You deserve all the happiness in the world 🌍"
     ];
 
