@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Day 7 | Fun Quiz About Us 🎮</title>
   <style>
     body {
@@ -108,8 +108,18 @@
   </style>
 </head>
 <body>
-  <h1>Day 7 🎮 Fun Quiz About Us</h1>
+  <!-- Date-lock: unlocks on or after October 27, 2025 -->
+  <script>
+    var unlockDate = new Date(2025, 9, 27);
+    var today = new Date();
+    if (today < unlockDate) {
+      document.body.innerHTML = '<h2 style="color:#fff;text-align:center;margin-top:20vh">This page unlocks on ' + unlockDate.toDateString() + '.</h2>';
+      document.body.style.background = '#141329';
+      throw '';
+    }
+  </script>
 
+  <h1>Day 7 🎮 Fun Quiz About Us</h1>
   <div class="quiz-container">
     <div id="quiz">
       <div class="question" id="question">Loading question...</div>
