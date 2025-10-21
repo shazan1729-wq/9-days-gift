@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Day 5 | Reasons Why You’re Special 💛</title>
   <style>
     body {
@@ -95,6 +95,16 @@
   </style>
 </head>
 <body>
+  <!-- Date-lock: unlocks only on or after Oct 25, 2025 -->
+  <script>
+    var unlockDate = new Date(2025, 9, 25); // October 25, 2025
+    var today = new Date();
+    if (today < unlockDate) {
+      document.body.innerHTML = '<h2 style="color:#fff;text-align:center;margin-top:20vh">This page unlocks on ' + unlockDate.toDateString() + '.</h2>';
+      document.body.style.background='#141329';
+      throw '';
+    }
+  </script>
   <h1>Day 5: Reasons Why You’re Special 🧡</h1>
   <p>Faizan, Tedduu's🧸 Budduu🧡, here’s why you mean so much to me 😉</p>
 
@@ -104,7 +114,7 @@
     <div class="card">3️⃣ You can turn an ordinary day into something memorable.🧡</div>
     <div class="card">4️⃣ You care deeply — even when you pretend you don’t. 💛</div>
     <div class="card">5️⃣ You have this peaceful aura that makes me calm.</div>
-      <div class="card">6️⃣ You’re not just a friend… you’re a comfort zone. 🫶</div>
+    <div class="card">6️⃣ You’re not just a friend… you’re a comfort zone. 🫶</div>
     <div class="card">7️⃣ You remind me that I have some values. 🌸</div>
     <div class="card">8️⃣ You always know how to make me laugh! 😂</div>
     <div class="card">9️⃣ You make life feel lighter — just by being in it. 😉</div>
@@ -112,7 +122,6 @@
 
   <button onclick="nextDay()">Next ➜</button>
 
-  
   <script>
     function nextDay() {
       window.location.href = "day6.html";
