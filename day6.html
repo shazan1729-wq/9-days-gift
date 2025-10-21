@@ -88,22 +88,23 @@
   </style>
 </head>
 <body>
- <script>
-  // Date lock: no content before October 25, 2025
-  var unlockDate = new Date(2025, 9, 25);
-  var today = new Date();
-  if (today < unlockDate) {
-    document.write('<h2 style="color:#fff;text-align:center;margin-top:20vh">This page unlocks on ' + unlockDate.toDateString() + '.</h2>');
-    document.body.style.background='#141329';
-    throw '';
-  }
-</script>
+  <script>
+    // Date lock: no content before October 26, 2025
+    var unlockDate = new Date(2025, 9, 26); // Month is 0-indexed, so 9 = October
+    var today = new Date();
+    if (today < unlockDate) {
+      document.write('<h2 style="color:#fff;text-align:center;margin-top:20vh">This page unlocks on ' + unlockDate.toDateString() + '.</h2>');
+      document.body.style.background = '#141329';
+      throw '';
+    }
+  </script>
 
   <h1>Day 6: A Letter to My Budduu 😉🧡💌</h1>
   <div id="letter"></div>
   <audio id="bg-music" src="https://cdn.pixabay.com/audio/2022/03/15/audio_c5c3e35a58.mp3" autoplay loop></audio>
   <button onclick="nextDay()">Next ➜</button>
   <footer>Written with ❤️ by Tedduu 🧸</footer>
+
   <script>
     const message = 
 `Dear Faizan My Budduu 🧡....., 💫
@@ -145,4 +146,3 @@ Tedduu 🧸 💌`;
   </script>
 </body>
 </html>
-
