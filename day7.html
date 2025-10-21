@@ -109,8 +109,10 @@
 </head>
 <body>
   <script>
-    var unlockDate = new Date(2025, 9, 28); // Oct 28, 2025
+    // Lock until October 27, 2025
+    var unlockDate = new Date(2025, 9, 27); // Month 9 = October
     var today = new Date();
+
     if (today < unlockDate) {
       document.write('<h2 style="color:#fff;text-align:center;margin-top:20vh">This page unlocks on ' + unlockDate.toDateString() + '.</h2>');
       document.body.style.background = '#141329';
@@ -134,9 +136,9 @@
   <script>
     const quizData = [
       { question: "Who always forgets things first? 😅", options: ["Budduu🧡", "Tedduu🧸", "Both 😝", "None"], answer: "Budduu🧡" },
-      { question: "What’s our favorite thing to do together?", options: ["Laugh endlessly 😂", "Talk about random stuff", "Eat Food Together","Support Each Other ", "All of these 💛"], answer: "All of these 💛" },
+      { question: "What’s our favorite thing to do together?", options: ["Laugh endlessly 😂", "Talk about random stuff", "Eat Food Together", "Support Each Other", "All of these 💛"], answer: "All of these 💛" },
       { question: "Who gives the best advice?", options: ["Budduu🧡", "Tedduu🧸", "ChatGPT", "Maam😂"], answer: "Budduu🧡" },
-      { question: "What’s Budduu’s secret superpower?", options: ["Making me smile 😊", "Eating fast 🍕", "Vanishing suddenly 🕵️", "Supporting me anytime when I need  ✨"], answer: "Supporting me anytime when I need" },
+      { question: "What’s Budduu’s secret superpower?", options: ["Making me smile 😊", "Eating fast 🍕", "Vanishing suddenly 🕵️", "Supporting me anytime when I need ✨"], answer: "Supporting me anytime when I need ✨" },
       { question: "If we were a team, our name would be...?", options: ["The Budduu Squad", "#ShaZan", "BudduTedduu's Power 💫", "Dynamic Duo"], answer: "#ShaZan" }
     ];
 
