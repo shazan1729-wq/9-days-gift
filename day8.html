@@ -8,72 +8,198 @@
     body {
       margin: 0;
       font-family: 'Poppins', sans-serif;
-      background: #141329;
-      color: #fff;
+      background:linear-gradient(135deg, #007bff, #8e2de2, #ff0080);
+
+      background-size: 200% 200%;
+      animation: gradientMove 8s ease infinite;
       display: flex;
       justify-content: center;
       align-items: center;
       height: 100vh;
-      text-align: center;
       overflow: hidden;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    h2.unlock-msg {
-      font-size: 1.5em;
       color: #fff;
-    }
-
-    .gallery {
-      flex-direction: column;
-      align-items: center;
+      position: relative;
       text-align: center;
-      animation: fadeIn 1s ease forwards;
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .gallery-container {
+      perspective: 1000px;
+      width: 300px;
+      height: 400px;
+      position: relative;
+      display: none; /* hidden until unlocked */
+    }
+
+    .photo-card {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      transition: transform 1s;
+      transform-style: preserve-3d;
+      cursor: pointer;
+    }
+
+    .photo-card.flip {
+      transform: rotateY(180deg);
+    }
+
+    .front, .back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 15px;
+      backface-visibility: hidden;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+
+    .front {
+      background-size: cover;
+      background-position: center;
+    }
+
+    .back {
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      color: #fff;
+      text-align: center;
+      transform: rotateY(180deg);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .back h2 {
+      margin-bottom: 10px;
+      font-size: 1.3em;
+    }
+
+    .back p {
+      font-size: 1em;
+      line-height: 1.4em;
+    }
+
+    .next-btn {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,0.3);
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .next-btn:hover {
+      background: rgba(255,255,255,0.6);
+    }
+    #photo-next { bottom: -60px; }
+    #day9-next { bottom: -110px; }
+    h1 {
+      position: absolute;
+      top: 20px;
+      width: 100%;
+      font-size: 1.6em;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+      user-select: none;
+    }
+
+    /* Lock screen */
+    .lock-screen {
+      text-align: center;
+      color: #fff;
+      background: rgba(0, 0, 0, 0.5);
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      backdrop-filter: blur(6px);
+    }
+    .lock-screen h2 {
+      font-size: 1.5em;
+      margin-bottom: 10px;
+    }
+    .lock-screen p {
+      font-size: 1.1em;
     }
   </style>
 </head>
 <body>
 
-  <!-- Locked Message -->
-  <h2 class="unlock-msg" id="lockedMessage">
-    This page unlocks on Tue Oct 28 2025.
-  </h2>
+  
+  <div class="lock-screen" id="lockScreen">
+    <h2>🔒 Locked</h2>
+    <p>This page will unlock on <b>October 28</b> 💛</p>
+  </div>
+ <h1>💞 Mini Photo & Message Gallery 💞<br>Flip it</h1>
 
-  <!-- Gallery Section (hidden by default) -->
-  <div class="gallery hidden" id="galleryContent">
-    <h1>💞 Mini Photo & Message Gallery 💞 (Flip the card!)</h1>
-    <p>Welcome back! The gallery is now unlocked 🎉</p>
+
+  <div class="gallery-container" id="galleryContainer">
+    <div class="photo-card" id="photoCard">
+      <div class="front" id="frontPhoto"></div>
+      <div class="back" id="backText">
+        <h2>Message 1</h2>
+        <p>That smile, that’s my favorite frame 💫</p>
+      </div>
+    </div>
+    <button class="next-btn" id="photo-next" onclick="nextPhoto()">Next ➜</button>
+    <button class="next-btn" id="day9-next" onclick="goToDay9()">Go to Day 9 ➜</button>
   </div>
 
   <script>
-    window.onload = function() {
-      // Set unlock date (October 28, 2025)
-      const unlockDate = new Date(2025, 9, 28);
-      const today = new Date();
+    const unlockDate = new Date('2025-10-28T00:00:00');
+    const now = new Date();
 
-      const lockedMsg = document.getElementById('lockedMessage');
-      const gallery = document.getElementById('galleryContent');
+    const lockScreen = document.getElementById('lockScreen');
+    const gallery = document.getElementById('galleryContainer');
 
-      if (today >= unlockDate) {
-        // Unlock mode
-        lockedMsg.classList.add('hidden');
-        gallery.classList.remove('hidden');
-        document.body.style.background = "linear-gradient(135deg, #007bff, #8e2de2, #ff0080)";
-      } else {
-        // Locked mode
-        lockedMsg.classList.remove('hidden');
-        gallery.classList.add('hidden');
-        document.body.style.background = "#141329";
-      }
-    };
+    if (now >= unlockDate) {
+      lockScreen.style.display = 'none';
+      gallery.style.display = 'block';
+    }
+
+    const photos = [
+      { img: 'image.jpg', text: 'That smile, that’s my cuteeee paieeee 😉' },
+      { img: 'shid.jpg', text: 'I want to hug you as same as this image shows 🧡' },
+      { img: 'shid2.jpg', text: 'I think that’s our future! If I die someday, can you be my children’s Buddy Uncle? 😅' },
+      { img: 'shid3.jpg', text: 'That’s us in real life – Teddy 🧸 & Buddy 🧡' }
+    ];
+
+    let current = 0;
+    const card = document.getElementById('photoCard');
+    const front = document.getElementById('frontPhoto');
+    const back = document.getElementById('backText').querySelector('p');
+    const backTitle = document.getElementById('backText').querySelector('h2');
+
+    front.style.backgroundImage = `url(${photos[0].img})`;
+    back.textContent = photos[0].text;
+
+    card.addEventListener('click', () => {
+      card.classList.toggle('flip');
+    });
+
+    function nextPhoto() {
+      card.classList.remove('flip');
+      current = (current + 1) % photos.length;
+      setTimeout(() => {
+        front.style.backgroundImage = `url(${photos[current].img})`;
+        back.textContent = photos[current].text;
+        backTitle.textContent = `Message ${current + 1}`;
+      }, 500);
+    }
+
+    function goToDay9() {
+      window.location.href = "day9.html";
+    }
   </script>
 
 </body>
