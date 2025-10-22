@@ -7,34 +7,17 @@
   <style>
     body {
       margin: 0;
-      font-family: 'Poppins', monospace;
-      color: #fff;
-      text-align: center;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
       background: linear-gradient(135deg, #007bff, #8e2de2, #ff0080);
       background-size: 200% 200%;
       animation: gradientMove 8s ease infinite;
-    }
-
-    #locked {
-      display: none;
-      font-size: 1.5rem;
+      font-family: 'Poppins', monospace;
       color: #fff;
-      background: #141329;
-      width: 100%;
-      height: 100vh;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
-      flex-direction: column;
-    }
-
-    #main {
-      display: none;
+      height: 100vh;
+      text-align: center;
     }
 
     h1 {
@@ -92,46 +75,28 @@
   </style>
 </head>
 <body>
-  <!-- Locked message (before unlock date) -->
-  <div id="locked">
-    <h2>This page unlocks on Thu Oct 23 2025.</h2>
-  </div>
+  <h1>Day 3: Compliment Generator ✨</h1>
+  <p>Click the button below to get a random compliment, Budduu!</p>
 
-  <!-- Main content (unlocked later) -->
-  <div id="main">
-    <h1>Day 3: Compliment Generator ✨</h1>
-    <p>Click the button below to get a random compliment, Budduu!</p>
-    <div id="compliment">💬 Your compliments will appear here 💬</div>
-    <button onclick="generateCompliment()">Get Compliment 💛</button>
-    <button style="margin-top:20px;" onclick="nextDay()">Next ➜</button>
-    <footer>Created with ❤️ by Tedduu 🧸</footer>
-  </div>
+  <div id="compliment">💬 Your compliments will appear here 💬</div>
+  <button onclick="generateCompliment()">Get Compliment 💛</button>
+  <button style="margin-top:20px;" onclick="nextDay()">Next ➜</button>
+
+  <footer>Created with ❤️ by Tedduu 🧸</footer>
 
   <script>
-    // Set your unlock date here
-    const unlockDate = new Date("October 23, 2025 00:00:00").getTime();
-    const now = new Date().getTime();
-
-    if (now >= unlockDate) {
-      document.getElementById("main").style.display = "block";
-    } else {
-      document.body.style.background = "#141329";
-      document.getElementById("locked").style.display = "flex";
-    }
-
-    // Compliment Generator
     const compliments = [
       "1. You make my day brighter, Faizan ✨",
       "2. You’ve got the kind of smile that can fix my bad mood 😊",
       "3. Budduu, you’re seriously one of a kind 💫",
-      "4. Your friendship is pure gold 🧡",
+      "4. Your friendship is for me it's a pure gold 🧡",
       "5. You make everything more fun just by being there 🎉",
-      "6. You know me better than anyone 🥹",
-      "7. You have a heart that shines brighter than anyone 💗",
+      "6. You know me better than Anyone 🥹",
+      "7. You have a heart that shines brighter than any one 💗 ",
       "8. You’re awesome — no updates required 💻",
-      "9. Never forget — you’re genuinely special to me forever 🧡",
-      "10. In a world full of selfishness, you are a true gem 💎",
-      "11. Your positivity is infectious and uplifting 🌟"
+      "9. Never forget — you’re genuinely special for me forever 🧡",
+      "10. In the World full of selfishness, you are a true Gem 💎",
+      "11. Your positivity is infectious and uplifting 🌟",
     ];
 
     function generateCompliment() {
@@ -150,4 +115,3 @@
   </script>
 </body>
 </html>
-
