@@ -6,6 +6,7 @@
   <title>Day 5 | Reasons Why You’re Special 💛</title>
 
   <style>
+    :root{--accent:#ff8000}
     body {
       margin: 0;
       padding: 0;
@@ -15,11 +16,10 @@
       animation: gradientMove 8s ease infinite;
       color: #fff;
       display: flex;
-      flex-direction: column;
       align-items: center;
-      justify-content: flex-start;
+      justify-content: center;
       min-height: 100vh;
-      overflow-x: hidden;
+      overflow: hidden;
       text-align: center;
     }
 
@@ -29,93 +29,119 @@
       100% { background-position: 0% 50%; }
     }
 
-    h1 {
-      margin-top: 40px;
-      font-size: 2rem;
-      text-shadow: 0 0 20px rgba(255,255,255,0.8);
+    .stage {
+      width: 95%;
+      max-width: 760px;
+      margin: 40px auto;
+      position: relative;
     }
 
-    p {
-      margin-top: 10px;
-      opacity: 0.9;
+    h1 { margin: 0 0 8px; font-size: 1.9rem; text-shadow: 0 0 20px rgba(0,0,0,0.25); }
+    p { margin: 0 0 20px; opacity: 0.95 }
+
+    .quiz {
+      background: rgba(255,255,255,0.14);
+      backdrop-filter: blur(6px);
+      border-radius: 14px;
+      padding: 22px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+      color: #fff;
     }
 
+    .question { font-size: 1.05rem; margin-bottom: 12px; }
+
+    .options { display:flex; flex-direction:column; gap:10px; }
+    .option {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 10px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform .15s ease, background .2s ease;
+      text-align: left;
+    }
+    .option:hover { transform: translateY(-3px); }
+    .option.selected { background: rgba(255,255,255,0.25); }
+
+    .controls { display:flex; justify-content:space-between; align-items:center; margin-top:16px; }
+    .btn {
+      background:#fff; color: var(--accent); border:none; padding:10px 18px; border-radius:10px; font-weight:600; cursor:pointer;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+    }
+
+    .cards-wrap { margin-top:22px; }
     .container {
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin-top: 30px;
-      width: 90%;
-      max-width: 600px;
+      width: 100%;
     }
 
     .card {
-      background: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.18);
       backdrop-filter: blur(5px);
-      border-radius: 15px;
-      padding: 20px;
-      margin: 15px 0;
-      box-shadow: 0 0 20px rgba(255,255,255,0.3);
-      transition: transform 0.4s ease, background 0.4s ease;
+      border-radius: 14px;
+      padding: 16px 18px;
+      margin: 12px 0;
       width: 100%;
+      max-width: 620px;
       color: #fff;
-      font-size: 1.1rem;
+      font-size: 1.05rem;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.2);
+      opacity: 0;
+      transform: translateY(18px) scale(0.995);
+      transition: opacity 480ms cubic-bezier(.2,.9,.23,1), transform 480ms cubic-bezier(.2,.9,.23,1);
     }
+    .card.show { opacity: 1; transform: translateY(0) scale(1); }
 
-    .card:hover {
-      background: rgba(255,255,255,0.35);
-      color: #000;
-      transform: scale(1.05);
-    }
+    .next-day { margin: 26px 0 60px; }
 
-    button {
-      margin: 30px 0 50px;
-      background: #fff;
-      color: #ff8000;
-      border: none;
-      padding: 12px 25px;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-      box-shadow: 0 0 15px rgba(255,255,255,0.6);
-      transition: 0.3s;
-    }
+    footer { position: absolute; bottom: 12px; left: 0; right: 0; text-align:center; font-size:0.92rem; opacity:0.9 }
 
-    button:hover {
-      background: #ffe082;
-      color: #ff6f00;
-      transform: scale(1.1);
-    }
-
-    footer {
-      position: absolute;
-      bottom: 10px;
-      font-size: 0.9rem;
-      opacity: 0.8;
-    }
+    @media (max-width:520px){ h1{font-size:1.4rem} .quiz{padding:16px} }
   </style>
 </head>
 
 <body style="display:none;" id="mainBody">
-  <h1>Day 5: Reasons Why You’re Special 🧡</h1>
-  <p>Faizan, Tedduu's 🧸 Budduu🧡 — here’s why you mean so much to me 😉</p>
+  <div class="stage" id="stage">
+    <div class="quiz" id="quizBox">
+      <h1>Day 5: Reasons Why You’re Special 🧡</h1>
+      <p>Faizan, Tedduu's 🧸 Budduu🧡 — solve the quick quiz to unlock the notes one by one.</p>
 
-  <div class="container">
-    <div class="card">1️⃣ You’re honest — no pretending, no fake vibes.💝</div>
-    <div class="card">2️⃣ You always make me feel seen and valued.💗</div>
-    <div class="card">3️⃣ You can turn an ordinary day into something memorable.🧡</div>
-    <div class="card">4️⃣ You care deeply — even when you pretend you don’t. 💛</div>
-    <div class="card">5️⃣ You have this peaceful aura that makes me calm.</div>
-    <div class="card">6️⃣ You’re not just a friend… you’re a comfort zone. 🫶</div>
-    <div class="card">7️⃣ You remind me that I have some values. 🌸</div>
-    <div class="card">8️⃣ You always know how to make me laugh! 😂</div>
-    <div class="card">9️⃣ You make life feel lighter — just by being in it. 😉</div>
+      <div id="quizInner"></div>
+
+      <div class="controls">
+        <div id="feedback" style="color:#fff; opacity:0.95"></div>
+        <div>
+          <button class="btn" id="prevBtn" style="margin-right:8px; display:none;">Back</button>
+          <button class="btn" id="nextBtn">Start</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="cards-wrap" id="cardsArea" style="display:none;">
+      <div class="container" id="cardsContainer">
+        <div class="card">1️⃣ You know me very well and respect me.💝</div>
+        <div class="card">2️⃣ You always make me feel seen and valued.💗</div>
+        <div class="card">3️⃣ You can turn an ordinary day into something memorable.🧡</div>
+        <div class="card">4️⃣ You care deeply — even when you pretend you don’t. 💛</div>
+        <div class="card">5️⃣ You have this peaceful aura that makes me calm.</div>
+        <div class="card">6️⃣ You’re not just a friend… you’re a comfort zone. 🫶</div>
+        <div class="card">7️⃣ You remind me that I have some values. 🌸</div>
+        <div class="card">8️⃣ You always know how to make me laugh! 😂</div>
+        <div class="card">9️⃣ You make life feel lighter — just by being in it. 😉</div>
+      </div>
+
+      <div class="next-day">
+        <button class="btn" onclick="location.href='day6.html'">Next ➜</button>
+      </div>
+    </div>
+
+    <footer>Created with 💛 by Tedduu 🧸</footer>
   </div>
 
-  <button onclick="nextDay()">Next ➜</button>
-  <footer>Saturday ✨ Created with love by Tedduu 🧸</footer>
-
   <script>
+    // Unlock date setup
     const unlockDate = new Date("2025-10-25T00:00:00");
     const today = new Date();
 
@@ -135,7 +161,8 @@
           font-family: 'Poppins', sans-serif;
         ">
           <h2 style="font-size:1.6rem;text-shadow:0 0 10px rgba(255,255,255,0.6);">
-            This page unlocks on Saturday, October 25, 2025.
+            This page unlocks on Saturday, October 25, 2025.<br>
+		Come Tomorrow 😉
           </h2>
         </div>
       `;
@@ -144,9 +171,71 @@
       document.getElementById("mainBody").style.display = "block";
     }
 
-    function nextDay() {
-      window.location.href = "day6.html";
+    // Quiz logic
+    const questions = [
+      { q: "Kya tum Mujhe sacchi mein dost samjhte ho?", options: ["Yes", "No"], correct: 0 },
+      { q: "Kya tum mere liye special ho?", options: ["Yes", "No"], correct: 0 },
+      { q: "Kya tum kabhi mujhe chhodo ge?", options: ["Yes", "No"], correct: 0 }
+    ];
+
+    let idx = 0;
+    const quizInner = document.getElementById('quizInner');
+    const nextBtn = document.getElementById('nextBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    const feedback = document.getElementById('feedback');
+
+    function renderQuestion(i) {
+      const item = questions[i];
+      quizInner.innerHTML = `
+        <div class="question">${i+1}. ${item.q}</div>
+        <div class="options">
+          ${item.options.map((opt, j)=>`<div class="option" data-index="${j}">${opt}</div>`).join('')}
+        </div>
+      `;
+      document.querySelectorAll('.option').forEach(el=>{
+        el.addEventListener('click', ()=>{
+          document.querySelectorAll('.option').forEach(o=>o.classList.remove('selected'));
+          el.classList.add('selected');
+          feedback.textContent = '';
+        });
+      });
+      prevBtn.style.display = i>0 ? 'inline-block' : 'none';
+      nextBtn.textContent = i === 0 ? 'Next' : (i === questions.length-1 ? 'Finish' : 'Next');
     }
+
+    nextBtn.addEventListener('click', ()=>{
+      const selected = document.querySelector('.option.selected');
+      if(!selected){ feedback.style.color = '#ffdede'; feedback.textContent = 'Please choose an option.'; return; }
+      const chosen = Number(selected.dataset.index);
+      const correct = questions[idx].correct;
+      if(chosen !== correct){
+        feedback.style.color = '#ffdede';
+        feedback.textContent = 'Not quite right. Try again.';
+        selected.animate([{ transform: 'translateX(0)' },{ transform: 'translateX(-6px)' },{ transform: 'translateX(6px)' },{ transform: 'translateX(0)' }], { duration: 300 });
+        return;
+      }
+      feedback.style.color = '#e0ffd6';
+      feedback.textContent = 'Nice!';
+      if(idx < questions.length - 1){
+        idx++;
+        setTimeout(()=>{ feedback.textContent = ''; renderQuestion(idx); }, 450);
+      } else {
+        document.getElementById('quizBox').style.display = 'none';
+        revealCards();
+      }
+    });
+
+    prevBtn.addEventListener('click', ()=>{ if(idx>0){ idx--; renderQuestion(idx); feedback.textContent = ''; } });
+
+    function revealCards(){
+      const area = document.getElementById('cardsArea');
+      const cards = Array.from(document.querySelectorAll('.card'));
+      area.style.display = 'block';
+      cards.forEach((c, i)=>{ setTimeout(()=> c.classList.add('show'), i * 350); });
+      setTimeout(()=> area.scrollIntoView({behavior:'smooth', block:'center'}), 100);
+    }
+
+    renderQuestion(0);
   </script>
 </body>
 </html>
