@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Day 6 | A Letter to Budduu 💌</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Day 5 | Reasons Why You’re Special 💛</title>
+
   <style>
+    :root{--accent:#ff8000}
     body {
       margin: 0;
       padding: 0;
+      font-family: 'Poppins', sans-serif;
       background: linear-gradient(135deg, #007bff, #8e2de2, #ff0080);
       background-size: 200% 200%;
       animation: gradientMove 8s ease infinite;
       color: #fff;
-      font-family: 'Poppins', sans-serif;
-      height: 100vh;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
       align-items: center;
-      text-align: center;
+      justify-content: center;
+      min-height: 100vh;
       overflow: hidden;
+      text-align: center;
     }
 
     @keyframes gradientMove {
@@ -28,153 +29,213 @@
       100% { background-position: 0% 50%; }
     }
 
-    h1 {
-      font-size: 2rem;
-      margin-bottom: 20px;
-      text-shadow: 0 0 20px rgba(255,255,255,0.8);
-      animation: fadeIn 2s ease forwards;
+    .stage {
+      width: 95%;
+      max-width: 760px;
+      margin: 40px auto;
+      position: relative;
     }
 
-    #letter {
-      font-size: 1.1rem;
-      width: 80%;
-      max-width: 650px;
-      line-height: 1.7;
-      border-right: 2px solid #fff;
-      white-space: pre-wrap;
-      overflow: hidden;
-      animation: typing 20s steps(100, end), blink 0.6s step-end infinite alternate;
+    h1 { margin: 0 0 8px; font-size: 1.9rem; text-shadow: 0 0 20px rgba(0,0,0,0.25); }
+    p { margin: 0 0 20px; opacity: 0.95 }
+
+    .quiz {
+      background: rgba(255,255,255,0.14);
+      backdrop-filter: blur(6px);
+      border-radius: 14px;
+      padding: 22px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+      color: #fff;
     }
 
-    button {
-      margin-top: 40px;
-      background: #fff;
-      color: #8e2de2;
-      border: none;
-      padding: 12px 25px;
-      border-radius: 8px;
-      font-weight: bold;
+    .question { font-size: 1.05rem; margin-bottom: 12px; }
+
+    .options { display:flex; flex-direction:column; gap:10px; }
+    .option {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 10px 14px;
+      border-radius: 10px;
       cursor: pointer;
-      box-shadow: 0 0 15px rgba(255,255,255,0.7);
-      transition: 0.3s;
+      transition: transform .15s ease, background .2s ease;
+      text-align: left;
+    }
+    .option:hover { transform: translateY(-3px); }
+    .option.selected { background: rgba(255,255,255,0.25); }
+
+    .controls { display:flex; justify-content:space-between; align-items:center; margin-top:16px; }
+    .btn {
+      background:#fff; color: var(--accent); border:none; padding:10px 18px; border-radius:10px; font-weight:600; cursor:pointer;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
     }
 
-    button:hover {
-      background: #ff0080;
+    .cards-wrap { margin-top:22px; }
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(5px);
+      border-radius: 14px;
+      padding: 16px 18px;
+      margin: 12px 0;
+      width: 100%;
+      max-width: 620px;
       color: #fff;
-      transform: scale(1.1);
+      font-size: 1.05rem;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.2);
+      opacity: 0;
+      transform: translateY(18px) scale(0.995);
+      transition: opacity 480ms cubic-bezier(.2,.9,.23,1), transform 480ms cubic-bezier(.2,.9,.23,1);
     }
+    .card.show { opacity: 1; transform: translateY(0) scale(1); }
 
-    footer {
-      position: absolute;
-      bottom: 10px;
-      font-size: 0.9rem;
-      opacity: 0.8;
-    }
+    .next-day { margin: 26px 0 60px; }
 
-    .locked {
-      font-size: 1.3rem;
-      font-weight: 600;
-      color: #fff;
-      text-align: center;
-    }
+    footer { position: absolute; bottom: 12px; left: 0; right: 0; text-align:center; font-size:0.92rem; opacity:0.9 }
 
-    @keyframes typing {
-      from { width: 0; }
-      to { width: 100%; }
-    }
-
-    @keyframes blink {
-      from { border-color: transparent; }
-      to { border-color: white; }
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    @media (max-width:520px){ h1{font-size:1.4rem} .quiz{padding:16px} }
   </style>
 </head>
-<body>
-  <div id="lock-message" class="locked"></div>
 
-  <div id="mainContent" style="display:none;">
-    <h1>Day 6: A Letter to My Budduu 😉🧡💌</h1>
+<body style="display:none;" id="mainBody">
+  <div class="stage" id="stage">
+    <div class="quiz" id="quizBox">
+      <h1>Day 5: Reasons Why You’re Special 🧡</h1>
+      <p>Faizan, Tedduu's 🧸 Budduu🧡 — solve the quick quiz to unlock the notes one by one.</p>
 
-    <div id="letter"></div>
+      <div id="quizInner"></div>
 
-    <audio id="bg-music" src="https://cdn.pixabay.com/audio/2022/03/15/audio_c5c3e35a58.mp3" autoplay loop></audio>
+      <div class="controls">
+        <div id="feedback" style="color:#fff; opacity:0.95"></div>
+        <div>
+          <button class="btn" id="prevBtn" style="margin-right:8px; display:none;">Back</button>
+          <button class="btn" id="nextBtn">Start</button>
+        </div>
+      </div>
+    </div>
 
-    <button onclick="nextDay()">Next ➜</button>
+    <div class="cards-wrap" id="cardsArea" style="display:none;">
+      <div class="container" id="cardsContainer">
+        <div class="card">1️⃣ You know me very well and respect me.💝</div>
+        <div class="card">2️⃣ You always make me feel seen and valued.💗</div>
+        <div class="card">3️⃣ You can turn an ordinary day into something memorable.🧡</div>
+        <div class="card">4️⃣ You care deeply — even when you pretend you don’t. 💛</div>
+        <div class="card">5️⃣ You have this peaceful aura that makes me calm.</div>
+        <div class="card">6️⃣ You’re not just a friend… you’re a comfort zone. 🫶</div>
+        <div class="card">7️⃣ You remind me that I have some values. 🌸</div>
+        <div class="card">8️⃣ You always know how to make me laugh! 😂</div>
+        <div class="card">9️⃣ You make life feel lighter — just by being in it. 😉</div>
+      </div>
 
-    <footer>Written with ❤️ by Tedduu 🧸</footer>
+      <div class="next-day">
+        <button class="btn" onclick="location.href='day6.html'">Next ➜</button>
+      </div>
+    </div>
+
+    <footer>Created with 💛 by Tedduu 🧸</footer>
   </div>
 
   <script>
-    const unlockDate = new Date("2025-10-26T00:00:00"); // 🔒 change date if needed
+    // Unlock date setup
+    const unlockDate = new Date("2025-10-25T00:00:00");
     const today = new Date();
 
-    const lockMessage = document.getElementById("lock-message");
-    const mainContent = document.getElementById("mainContent");
-
     if (today < unlockDate) {
-      const formattedDate = unlockDate.toLocaleDateString("en-US", {
-        weekday: "long",
-        year: "numeric",
-        month: "long",
-        day: "numeric"
-      });
-      lockMessage.innerHTML = `🔒 This page unlocks on ${formattedDate}.<br>
-			Come back Tommorrow`;
-      mainContent.style.display = "none";
+      document.body.style.display = "flex";
+      document.body.innerHTML = `
+        <div style="
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          height: 100vh;
+          width: 100%;
+          text-align: center;
+          background: #141329;
+          color: #fff;
+          font-family: 'Poppins', sans-serif;
+        ">
+          <h2 style="font-size:1.6rem;text-shadow:0 0 10px rgba(255,255,255,0.6);">
+            This page unlocks on Sunday, October 26, 2025.<br>
+		Come Tomorrow 💗
+          </h2>
+        </div>
+      `;
+      throw new Error("Locked until unlock date");
     } else {
-      lockMessage.style.display = "none";
-      mainContent.style.display = "flex";
-      mainContent.style.flexDirection = "column";
-      mainContent.style.justifyContent = "center";
-      mainContent.style.alignItems = "center";
+      document.getElementById("mainBody").style.display = "block";
+    }
 
-      const message = 
-`Dear Faizan My Budduu 🧡....., 💫
+    // Quiz logic
+    const questions = [
+      { q: "Kya tum Mujhe sacchi mein dost samjhte ho?", options: ["Yes", "No"], correct: 0 },
+      { q: "Kya tum mere liye special ho?", options: ["Yes", "No"], correct: 0 },
+      { q: "Kya tum kabhi mujhe chhodo ge?", options: ["Yes", "No"], correct: 1 }
+    ];
 
-You might not realize it, but you’ve been one of the best parts of my life.  
-From random talks to deep thoughts — every moment has felt real and comforting.  
+    let idx = 0;
+    const quizInner = document.getElementById('quizInner');
+    const nextBtn = document.getElementById('nextBtn');
+    const prevBtn = document.getElementById('prevBtn');
+    const feedback = document.getElementById('feedback');
 
-You make ordinary days feel special, and even your silence speaks peace.  
-This little 9-day project is my way of saying thank you —  
-for being you, for staying, and for never pretending. 
+    function renderQuestion(i) {
+      const item = questions[i];
+      quizInner.innerHTML = `
+        <div class="question">${i+1}. ${item.q}</div>
+        <div class="options">
+          ${item.options.map((opt, j)=>`<div class="option" data-index="${j}">${opt}</div>`).join('')}
+        </div>
+      `;
+      document.querySelectorAll('.option').forEach(el=>{
+        el.addEventListener('click', ()=>{
+          document.querySelectorAll('.option').forEach(o=>o.classList.remove('selected'));
+          el.classList.add('selected');
+          feedback.textContent = '';
+        });
+      });
+      prevBtn.style.display = i>0 ? 'inline-block' : 'none';
+      nextBtn.textContent = i === 0 ? 'Next' : (i === questions.length-1 ? 'Finish' : 'Next');
+    }
 
-Some lines of song I want to dedicate you —
-
-	Tum ho to sab achha hai 
-	Tum ho to waqt thama hai
-	Tum ho to ye lamha hai
-	Tum ho to iss mein sadaa hai
-
-You deserve every good thing life has to offer.  
-Stay kind, stay genuine, and never forget — you’re appreciated more than words can express. 🧡  
-
-Yours,  
-Tedduu 🧸 💌`;
-
-      let i = 0;
-      const speed = 50;
-      const letterDiv = document.getElementById("letter");
-
-      function typeLetter() {
-        if (i < message.length) {
-          letterDiv.innerHTML += message.charAt(i);
-          i++;
-          setTimeout(typeLetter, speed);
-        }
+    nextBtn.addEventListener('click', ()=>{
+      const selected = document.querySelector('.option.selected');
+      if(!selected){ feedback.style.color = '#ffdede'; feedback.textContent = 'Please choose an option.'; return; }
+      const chosen = Number(selected.dataset.index);
+      const correct = questions[idx].correct;
+      if(chosen !== correct){
+        feedback.style.color = '#ffdede';
+        feedback.textContent = 'Not quite right. Try again.';
+        selected.animate([{ transform: 'translateX(0)' },{ transform: 'translateX(-6px)' },{ transform: 'translateX(6px)' },{ transform: 'translateX(0)' }], { duration: 300 });
+        return;
       }
+      feedback.style.color = '#e0ffd6';
+      feedback.textContent = 'Nice!';
+      if(idx < questions.length - 1){
+        idx++;
+        setTimeout(()=>{ feedback.textContent = ''; renderQuestion(idx); }, 450);
+      } else {
+        document.getElementById('quizBox').style.display = 'none';
+        revealCards();
+      }
+    });
 
-      window.onload = typeLetter;
+    prevBtn.addEventListener('click', ()=>{ if(idx>0){ idx--; renderQuestion(idx); feedback.textContent = ''; } });
+
+    function revealCards(){
+      const area = document.getElementById('cardsArea');
+      const cards = Array.from(document.querySelectorAll('.card'));
+      area.style.display = 'block';
+      cards.forEach((c, i)=>{ setTimeout(()=> c.classList.add('show'), i * 350); });
+      setTimeout(()=> area.scrollIntoView({behavior:'smooth', block:'center'}), 100);
     }
 
-    function nextDay() {
-      window.location.href = "day7.html";
-    }
+    renderQuestion(0);
   </script>
 </body>
 </html>
