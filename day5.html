@@ -1,242 +1,191 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Day 5 | Reasons Why You’re Special 💛</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 5 | Reasons Why You’re Special 💛</title>
+<style>
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #007bff, #8e2de2, #ff0080);
+  background-size: 200% 200%;
+  animation: gradientMove 8s ease infinite;
+  color: white;
+  text-align: center;
+  overflow-x: hidden;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 
-  <style>
-    :root{--accent:#ff8000}
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #007bff, #8e2de2, #ff0080);
-      background-size: 200% 200%;
-      animation: gradientMove 8s ease infinite;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      overflow: hidden;
-      text-align: center;
-    }
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 
-    @keyframes gradientMove {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
+h1 {
+  text-shadow: 0 0 15px rgba(255,255,255,0.8);
+}
 
-    .stage {
-      width: 95%;
-      max-width: 760px;
-      margin: 40px auto;
-      position: relative;
-    }
+.puzzle {
+  margin: 20px;
+  background: rgba(255,255,255,0.2);
+  padding: 20px;
+  border-radius: 15px;
+  max-width: 320px;
+  display: none;
+  backdrop-filter: blur(6px);
+}
 
-    h1 { margin: 0 0 8px; font-size: 1.9rem; text-shadow: 0 0 20px rgba(0,0,0,0.25); }
-    p { margin: 0 0 20px; opacity: 0.95 }
+.fade {
+  opacity: 0;
+  animation: fadeIn 0.7s forwards;
+}
 
-    .quiz {
-      background: rgba(255,255,255,0.14);
-      backdrop-filter: blur(6px);
-      border-radius: 14px;
-      padding: 22px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.25);
-      color: #fff;
-    }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-    .question { font-size: 1.05rem; margin-bottom: 12px; }
+button {
+  background: #fff;
+  color: #ff8000;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  margin: 5px;
+  transition: 0.3s;
+}
 
-    .options { display:flex; flex-direction:column; gap:10px; }
-    .option {
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.08);
-      padding: 10px 14px;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: transform .15s ease, background .2s ease;
-      text-align: left;
-    }
-    .option:hover { transform: translateY(-3px); }
-    .option.selected { background: rgba(255,255,255,0.25); }
+button:hover {
+  transform: scale(1.1);
+}
 
-    .controls { display:flex; justify-content:space-between; align-items:center; margin-top:16px; }
-    .btn {
-      background:#fff; color: var(--accent); border:none; padding:10px 18px; border-radius:10px; font-weight:600; cursor:pointer;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-    }
+.message {
+  display: none;
+  margin-top: 15px;
+  font-size: 1.1rem;
+  animation: fadeIn 0.7s ease;
+}
 
-    .cards-wrap { margin-top:22px; }
-    .container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-    }
+.confetti {
+  position: fixed;
+  width: 10px;
+  height: 10px;
+  background: gold;
+  top: 0;
+  animation: fall 3s linear infinite;
+}
 
-    .card {
-      background: rgba(255, 255, 255, 0.18);
-      backdrop-filter: blur(5px);
-      border-radius: 14px;
-      padding: 16px 18px;
-      margin: 12px 0;
-      width: 100%;
-      max-width: 620px;
-      color: #fff;
-      font-size: 1.05rem;
-      box-shadow: 0 6px 24px rgba(0,0,0,0.2);
-      opacity: 0;
-      transform: translateY(18px) scale(0.995);
-      transition: opacity 480ms cubic-bezier(.2,.9,.23,1), transform 480ms cubic-bezier(.2,.9,.23,1);
-    }
-    .card.show { opacity: 1; transform: translateY(0) scale(1); }
-
-    .next-day { margin: 26px 0 60px; }
-
-    footer { position: absolute; bottom: 12px; left: 0; right: 0; text-align:center; font-size:0.92rem; opacity:0.9 }
-
-    @media (max-width:520px){ h1{font-size:1.4rem} .quiz{padding:16px} }
-  </style>
+@keyframes fall {
+  0% { transform: translateY(0) rotate(0); }
+  100% { transform: translateY(100vh) rotate(360deg); }
+}
+</style>
 </head>
+<body>
 
-<body style="display:none;" id="mainBody">
-  <div class="stage" id="stage">
-    <div class="quiz" id="quizBox">
-      <h1>Day 5: Reasons Why You’re Special 🧡</h1>
-      <p>Faizan, Tedduu's 🧸 Budduu🧡 — solve the quick quiz to unlock the notes one by one.</p>
+<h1>Day 5: Reasons Why You’re Special 🧡</h1>
+<h3>💫 Emoji Match Game 💫</h3>
+<p>Match the right emoji to reveal each reason why you’re special 🧡</p>
 
-      <div id="quizInner"></div>
+<div id="game"></div>
+<h2 id="final" style="display:none;">🎉 You unlocked all messages! 🎉</h2>
+<footer>Created with 🧡 by Tedduu 🧸</footer>
+<button onclick="nextDay()">Go to Day 6 ➜</button>
 
-      <div class="controls">
-        <div id="feedback" style="color:#fff; opacity:0.95"></div>
-        <div>
-          <button class="btn" id="prevBtn" style="margin-right:8px; display:none;">Back</button>
-          <button class="btn" id="nextBtn">Start</button>
-        </div>
-      </div>
-    </div>
+<script>
+const puzzles = [
+  {q:"Which emoji means honesty?", options:["😎","💝","🤥"], answer:"💝", msg:" You’re honest — no pretending, no fake vibes."},
+  {q:"Which emoji shows appreciation?", options:["💗","💣","😈"], answer:"💗", msg:" You always make me feel seen and valued."},
+  {q:"Pick the one for memorable moments!", options:["🧡","💔","🧊"], answer:"🧡", msg:" You can turn an ordinary day into something memorable."},
+  {q:"Which emoji fits ‘you care deeply’?", options:["✨","💀","💛"], answer:"💛", msg:" You care deeply — even when you pretend you don’t."},
+  {q:"Peaceful aura emoji?", options:["💤","☮","🌸"], answer:"☮", msg:" You have this peaceful aura that makes me calm."},
+  {q:"Which emoji means comfort zone?", options:["🫶","🥶","🔥"], answer:"🫶", msg:" You’re not just a friend… you’re a comfort zone."},
+  {q:"Which emoji reminds of values?", options:["🎯","🍕","🌸"], answer:"🌸", msg:" You remind me that I have some values."},
+  {q:"Which emoji fits laughter?", options:["😴","😂","😢"], answer:"😂", msg:" You always know how to make me laugh!"}, 
+  {q:"Which emoji suits a lighter life?", options:["😉","😡","😐"], answer:"😉", msg:" You make life feel lighter — just by being in it."},
+  {q:"Which emoji means irreplaceable?", options:["📦","🍩","💎"], answer:"💎", msg:" You’re irreplaceable — there’s no one else like you."},
+  {q:"Which emoji means support?", options:["🏆","🤝","🎉"], answer:"🤝", msg:" You’re my support system — always there to support me."},
+  {q:"Which emoji means inspiration?", options:["🌟","💤","🛑"], answer:"🌟", msg:" You inspire me to be a better person."},
+  {q:"Which emoji means warmth?", options:["🔥","❄️","💨"], answer:"🔥", msg:" You bring warmth and light into my life."},
+  {q:"Which emoji means uniqueness?", options:["🐑","🦄","🐏"], answer:"🦄", msg:" You’re one of a kind — truly unique."},
+  {q:"Which emoji means kindness?", options:["💢","💖","💥"], answer:"💖", msg:" Your kindness is contagious."},
+  {q:"Pick the emoji for trust?", options:["🔒","💣","⚠️"], answer:"🔒", msg:" I trust you completely — no doubts."},
+  {q:"Pick the emoji for greatfullness? ", options:["💼","🙏","🎲"], answer:"🙏", msg:" I’m grateful for you every single day."}
+];
 
-    <div class="cards-wrap" id="cardsArea" style="display:none;">
-      <div class="container" id="cardsContainer">
-        <div class="card">1️⃣ You know me very well and respect me.💝</div>
-        <div class="card">2️⃣ You always make me feel seen and valued.💗</div>
-        <div class="card">3️⃣ You can turn an ordinary day into something memorable.🧡</div>
-        <div class="card">4️⃣ You care deeply — even when you pretend you don’t. 💛</div>
-        <div class="card">5️⃣ You have this peaceful aura that makes me calm.</div>
-        <div class="card">6️⃣ You’re not just a friend… you’re a comfort zone. 🫶</div>
-        <div class="card">7️⃣ You remind me that I have some values. 🌸</div>
-        <div class="card">8️⃣ You always know how to make me laugh! 😂</div>
-        <div class="card">9️⃣ You make life feel lighter — just by being in it. 😉</div>
-      </div>
+const gameDiv = document.getElementById("game");
+let current = 0;
 
-      <div class="next-day">
-        <button class="btn" onclick="location.href='day6.html'">Next ➜</button>
-      </div>
-    </div>
+function showPuzzle(i) {
+  const p = puzzles[i];
+  if (!p) return finishGame();
 
-    <footer>Created with 💛 by Tedduu 🧸</footer>
-  </div>
+  const div = document.createElement("div");
+  div.className = "puzzle fade";
 
-  <script>
-    // Unlock date setup
-    const unlockDate = new Date("2025-10-25T00:00:00");
-    const today = new Date();
+  div.innerHTML = `
+    <h3>${p.q}</h3>
+    ${p.options.map(o => `<button onclick="checkAnswer('${o}')">${o}</button>`).join('')}
+    <div class="message" id="msg${i}"></div>
+    <button id="nextBtn${i}" style="display:none;" onclick="nextPuzzle()">Next ➡</button>
+  `;
 
-    if (today < unlockDate) {
-      document.body.style.display = "flex";
-      document.body.innerHTML = `
-        <div style="
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          height: 100vh;
-          width: 100%;
-          text-align: center;
-          background: #141329;
-          color: #fff;
-          font-family: 'Poppins', sans-serif;
-        ">
-          <h2 style="font-size:1.6rem;text-shadow:0 0 10px rgba(255,255,255,0.6);">
-            This page unlocks on Saturday, October 25, 2025.<br>
-		Come Tomorrow 😉
-          </h2>
-        </div>
-      `;
-      throw new Error("Locked until unlock date");
-    } else {
-      document.getElementById("mainBody").style.display = "block";
-    }
+  gameDiv.innerHTML = "";
+  gameDiv.appendChild(div);
+  div.style.display = "block";
+}
 
-    // Quiz logic
-    const questions = [
-      { q: "Kya tum Mujhe sacchi mein dost samjhte ho?", options: ["Yes", "No"], correct: 0 },
-      { q: "Kya tum mere liye special ho?", options: ["Yes", "No"], correct: 0 },
-      { q: "Kya tum kabhi mujhe chhodo ge?", options: ["Yes", "No"], correct: 1 }
-    ];
+function checkAnswer(opt) {
+  const p = puzzles[current];
+  if (opt === p.answer) {
+    const msgDiv = document.getElementById("msg"+current);
+    msgDiv.innerText = p.msg;
+    msgDiv.style.display = "block";
 
-    let idx = 0;
-    const quizInner = document.getElementById('quizInner');
-    const nextBtn = document.getElementById('nextBtn');
-    const prevBtn = document.getElementById('prevBtn');
-    const feedback = document.getElementById('feedback');
+    const nextBtn = document.getElementById("nextBtn"+current);
+    nextBtn.style.display = "inline-block";
 
-    function renderQuestion(i) {
-      const item = questions[i];
-      quizInner.innerHTML = `
-        <div class="question">${i+1}. ${item.q}</div>
-        <div class="options">
-          ${item.options.map((opt, j)=>`<div class="option" data-index="${j}">${opt}</div>`).join('')}
-        </div>
-      `;
-      document.querySelectorAll('.option').forEach(el=>{
-        el.addEventListener('click', ()=>{
-          document.querySelectorAll('.option').forEach(o=>o.classList.remove('selected'));
-          el.classList.add('selected');
-          feedback.textContent = '';
-        });
-      });
-      prevBtn.style.display = i>0 ? 'inline-block' : 'none';
-      nextBtn.textContent = i === 0 ? 'Next' : (i === questions.length-1 ? 'Finish' : 'Next');
-    }
-
-    nextBtn.addEventListener('click', ()=>{
-      const selected = document.querySelector('.option.selected');
-      if(!selected){ feedback.style.color = '#ffdede'; feedback.textContent = 'Please choose an option.'; return; }
-      const chosen = Number(selected.dataset.index);
-      const correct = questions[idx].correct;
-      if(chosen !== correct){
-        feedback.style.color = '#ffdede';
-        feedback.textContent = 'Not quite right. Try again.';
-        selected.animate([{ transform: 'translateX(0)' },{ transform: 'translateX(-6px)' },{ transform: 'translateX(6px)' },{ transform: 'translateX(0)' }], { duration: 300 });
-        return;
-      }
-      feedback.style.color = '#e0ffd6';
-      feedback.textContent = 'Nice!';
-      if(idx < questions.length - 1){
-        idx++;
-        setTimeout(()=>{ feedback.textContent = ''; renderQuestion(idx); }, 450);
-      } else {
-        document.getElementById('quizBox').style.display = 'none';
-        revealCards();
-      }
+    const buttons = msgDiv.parentElement.querySelectorAll("button");
+    buttons.forEach(btn => {
+      if(btn.id !== "nextBtn"+current) btn.disabled = true;
     });
+  } else {
+    alert("❌ Try again!");
+  }
+}
 
-    prevBtn.addEventListener('click', ()=>{ if(idx>0){ idx--; renderQuestion(idx); feedback.textContent = ''; } });
+function nextPuzzle() {
+  current++;
+  showPuzzle(current);
+}
 
-    function revealCards(){
-      const area = document.getElementById('cardsArea');
-      const cards = Array.from(document.querySelectorAll('.card'));
-      area.style.display = 'block';
-      cards.forEach((c, i)=>{ setTimeout(()=> c.classList.add('show'), i * 350); });
-      setTimeout(()=> area.scrollIntoView({behavior:'smooth', block:'center'}), 100);
-    }
+function finishGame() {
+  gameDiv.innerHTML = "";
+  document.getElementById("final").style.display = "block";
+  for (let i=0; i<80; i++) {
+    const c = document.createElement("div");
+    c.className = "confetti";
+    c.style.left = Math.random()*100 + "vw";
+    c.style.background = ["#ff0080","#8e2de2","#ffcc00","#00f2ff"][Math.floor(Math.random()*4)];
+    c.style.animationDuration = (2 + Math.random()*3) + "s";
+    document.body.appendChild(c);
+  }
+}
 
-    renderQuestion(0);
-  </script>
+function nextDay() {
+  window.location.href = "day6.html";
+}
+
+// start the first puzzle
+showPuzzle(current);
+</script>
 </body>
 </html>
-
