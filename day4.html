@@ -8,7 +8,7 @@
     body {
       margin: 0;
       font-family: 'Poppins', sans-serif;
-      background:linear-gradient(135deg, #007bff, #8e2de2, #ff0080);
+      background: linear-gradient(135deg, #007bff, #8e2de2, #ff0080);
       background-size: 200% 200%;
       animation: gradientMove 8s ease infinite;
       color: #fff;
@@ -112,11 +112,34 @@
       from { opacity: 0; transform: scale(0.9); }
       to { opacity: 1; transform: scale(1); }
     }
+
+    /* Always visible Next button */
+    #nextBtn {
+      position: absolute;
+      bottom: 60px;
+      right: 30px;
+      background: #fff;
+      color: #ff6a00;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(255,255,255,0.6);
+      transition: 0.3s;
+    }
+
+    #nextBtn:hover {
+      background: #ff0080;
+      color: #fff;
+      transform: scale(1.1);
+    }
+
   </style>
 </head>
 <body>
   <h1>Day 4: Hidden Messages for Budduu 💌</h1>
-   <h4>Click to Open</h4>
+  <h4>Click to Open</h4>
 
   <div class="game" id="gameBox">
     <p id="hint">I am your ___ forever 🧸</p>
@@ -141,7 +164,9 @@
     <div class="box" onclick="reveal(this, 11)">💖</div>
   </div>
 
-  <button id="nextBtn" style="display:none;" onclick="nextDay()">Next ➜</button>
+  <!-- Always visible Next button -->
+  <button id="nextBtn" onclick="nextDay()">Next ➜</button>
+
   <footer>Created with ❤️ by Tedduu 🧸</footer>
 
   <script>
@@ -149,7 +174,7 @@
       { hint: "I am your ___ forever 🧸", answer: "tedduu" },
       { hint: "You are my ___ forever 🧡", answer: "budduu" },
       { hint: "The tount you pass on me first time ___ 😏", answer: "voice box" },
-      { hint: "You are my life ___ 🧑🏻‍🏫", answer: "teacher" } , 
+      { hint: "You are my life ___ 🧑🏻‍🏫", answer: "teacher" }, 
       { hint: "Our name mix ___ 💝", answer: "shazan" } 
     ];
 
@@ -185,7 +210,7 @@
       const grid = document.getElementById("messageGrid");
       grid.style.display = "grid";
       grid.classList.add("fade-in");
-      document.getElementById("nextBtn").style.display = "inline-block";
+      // Button is always visible now, no need to show it here
     }
 
     const messages = [
