@@ -1,243 +1,304 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Day 5 | Reasons Why You’re Special 💛</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 6 | A Letter to Budduu 💌</title>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #007bff, #8e2de2, #ff0080);
+    background-size: 200% 200%;
+    animation: gradientMove 8s ease infinite;
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+  }
 
-  <style>
-    :root{--accent:#ff8000}
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #007bff, #8e2de2, #ff0080);
-      background-size: 200% 200%;
-      animation: gradientMove 8s ease infinite;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      overflow: hidden;
-      text-align: center;
-    }
+  @keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
 
-    @keyframes gradientMove {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    text-shadow: 0 0 20px rgba(255,255,255,0.8);
+  }
 
-    .stage {
-      width: 95%;
-      max-width: 760px;
-      margin: 40px auto;
-      position: relative;
-    }
+  #game {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+  }
 
-    h1 { margin: 0 0 8px; font-size: 1.9rem; text-shadow: 0 0 20px rgba(0,0,0,0.25); }
-    p { margin: 0 0 20px; opacity: 0.95 }
+  .emoji-btn {
+    width: 80px;
+    height: 80px;
+    border: 2px solid #fff;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 0.2s, background 0.2s;
+    background: rgba(255,255,255,0.1);
+  }
 
-    .quiz {
-      background: rgba(255,255,255,0.14);
-      backdrop-filter: blur(6px);
-      border-radius: 14px;
-      padding: 22px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.25);
-      color: #fff;
-    }
+  .emoji-btn.active {
+    transform: scale(1.2);
+    background: rgba(255,255,255,0.3);
+  }
 
-    .question { font-size: 1.05rem; margin-bottom: 12px; }
+  #letter {
+    display: none;
+    font-size: 1.1rem;
+    width: 80%;
+    max-width: 650px;
+    line-height: 1.7;
+ 
+    white-space: pre-wrap;
+    overflow: hidden;
+    margin-top: 20px;
+  }
 
-    .options { display:flex; flex-direction:column; gap:10px; }
-    .option {
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.08);
-      padding: 10px 14px;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: transform .15s ease, background .2s ease;
-      text-align: left;
-    }
-    .option:hover { transform: translateY(-3px); }
-    .option.selected { background: rgba(255,255,255,0.25); }
+  #nextBtn {
+    margin-top: 20px;
+    display: none;
+    background: #fff;
+    color: #8e2de2;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(255,255,255,0.7);
+    transition: 0.3s;
+  }
 
-    .controls { display:flex; justify-content:space-between; align-items:center; margin-top:16px; }
-    .btn {
-      background:#fff; color: var(--accent); border:none; padding:10px 18px; border-radius:10px; font-weight:600; cursor:pointer;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-    }
+  #nextBtn:hover {
+    background: #ff0080;
+    color: #fff;
+    transform: scale(1.1);
+  }
 
-    .cards-wrap { margin-top:22px; }
-    .container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-    }
+  .emoji {
+    position: fixed;
+    top: -50px;
+    font-size: 20px;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.9;
+  }
 
-    .card {
-      background: rgba(255, 255, 255, 0.18);
-      backdrop-filter: blur(5px);
-      border-radius: 14px;
-      padding: 16px 18px;
-      margin: 12px 0;
-      width: 100%;
-      max-width: 620px;
-      color: #fff;
-      font-size: 1.05rem;
-      box-shadow: 0 6px 24px rgba(0,0,0,0.2);
-      opacity: 0;
-      transform: translateY(18px) scale(0.995);
-      transition: opacity 480ms cubic-bezier(.2,.9,.23,1), transform 480ms cubic-bezier(.2,.9,.23,1);
-    }
-    .card.show { opacity: 1; transform: translateY(0) scale(1); }
-
-    .next-day { margin: 26px 0 60px; }
-
-    footer { position: absolute; bottom: 12px; left: 0; right: 0; text-align:center; font-size:0.92rem; opacity:0.9 }
-
-    @media (max-width:520px){ h1{font-size:1.4rem} .quiz{padding:16px} }
-  </style>
+  footer {
+    position: absolute;
+    bottom: 10px;
+    font-size: 0.9rem;
+    opacity: 0.8;
+  }
+</style>
 </head>
+<body>
 
-<body style="display:none;" id="mainBody">
-  <div class="stage" id="stage">
-    <div class="quiz" id="quizBox">
-      <h1>Day 5: Reasons Why You’re Special 🧡</h1>
-      <p>Faizan, Tedduu's 🧸 Budduu🧡 — solve the quick quiz to unlock the notes one by one.</p>
+<h1>Day 6: A Letter to My Budduu 😉🧡💌</h1>
 
-      <div id="quizInner"></div>
 
-      <div class="controls">
-        <div id="feedback" style="color:#fff; opacity:0.95"></div>
-        <div>
-          <button class="btn" id="prevBtn" style="margin-right:8px; display:none;">Back</button>
-          <button class="btn" id="nextBtn">Start</button>
-        </div>
-      </div>
-    </div>
+<div id="game">
+  <button class="emoji-btn">🧡</button>
+  <button class="emoji-btn">✨</button>
+  <button class="emoji-btn">🧸</button>
+  <button class="emoji-btn">💝</button>
+  <button class="emoji-btn">💗</button>
+</div>
 
-    <div class="cards-wrap" id="cardsArea" style="display:none;">
-      <div class="container" id="cardsContainer">
-        <div class="card">1️⃣ You know me very well and respect me.💝</div>
-        <div class="card">2️⃣ You always make me feel seen and valued.💗</div>
-        <div class="card">3️⃣ You can turn an ordinary day into something memorable.🧡</div>
-        <div class="card">4️⃣ You care deeply — even when you pretend you don’t. 💛</div>
-        <div class="card">5️⃣ You have this peaceful aura that makes me calm.</div>
-        <div class="card">6️⃣ You’re not just a friend… you’re a comfort zone. 🫶</div>
-        <div class="card">7️⃣ You remind me that I have some values. 🌸</div>
-        <div class="card">8️⃣ You always know how to make me laugh! 😂</div>
-        <div class="card">9️⃣ You make life feel lighter — just by being in it. 😉</div>
-      </div>
+<div id="letter"></div>
+<button id="nextBtn" onclick="nextDay()">Go to Day 7 ➜</button>
 
-      <div class="next-day">
-        <button class="btn" onclick="location.href='day6.html'">Next ➜</button>
-      </div>
-    </div>
+<audio id="bg-music" src="https://cdn.pixabay.com/audio/2022/03/15/audio_c5c3e35a58.mp3" autoplay loop></audio>
 
-    <footer>Created with 💛 by Tedduu 🧸</footer>
-  </div>
+<footer>Written with ❤️ by Tedduu 🧸</footer>
 
-  <script>
-    // Unlock date setup
-    const unlockDate = new Date("2025-10-26T00:00:00");
-    const today = new Date();
+<script>
+const letterText = 
+`Dear Faizan My Budduu 🧡....., 💫
 
-    if (today < unlockDate) {
-      document.body.style.display = "flex";
-      document.body.innerHTML = `
-        <div style="
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          height: 100vh;
-          width: 100%;
-          text-align: center;
-          background: #141329;
-          color: #fff;
-          font-family: 'Poppins', sans-serif;
-        ">
-          <h2 style="font-size:1.6rem;text-shadow:0 0 10px rgba(255,255,255,0.6);">
-            This page unlocks on Sunday, October 26, 2025.<br>
-		Come Tomorrow 💗
-          </h2>
-        </div>
-      `;
-      throw new Error("Locked until unlock date");
-    } else {
-      document.getElementById("mainBody").style.display = "block";
+You might not realize it, but you’ve been one of the best parts of my life.  
+From random talks to deep thoughts — every moment has felt real and comforting.  
+
+You make ordinary days feel special, and even your silence speaks peace.  
+This little 9-day gifts is my way of saying thank you —  
+for being you, for staying, and for never pretending. 
+
+           From strangers to friends.
+           From friends to best friends.
+         From best friends to no one above you.
+        From no one above you to my everything.
+    It's been the best experience of my life with you.
+
+
+    You're someone I found as a stranger, but today
+    you're a part of my heart, you're my happiness, 
+    Whenever I need someone to share my feelings 
+    with I lookup to you, I know I can irritate you, tease 
+    you, get angry but our friendship will never break 
+    due to such reasons, you're the only one I'm 
+    comfortable with being around myself. I don't want
+    many friends, I just want you as my Best Friend forever 
+        because I'm very lucky to have you 🧡.
+        
+Some lines of song I want to dedicate you —
+
+      Tu hai to mujhe phir aur kya chahiye
+      Tu hai to mujhe phir aur kya chahiye ...
+
+      Kisi ki na madad na dua chahiye
+      Tu hai to mujhe phir aur kya chahiye ...
+
+            I just wanna tell you,
+       Thankyou for coming into my life,
+    Thankyou actually making me smile and laugh,
+   Thankyouuu so much for being so understanding,
+    Thankyouuu so much for caring about me,
+Thankyouuu sooo much for being my biggest supporter,
+     Thankyou soo much for caring about me,
+        I really appreciate you so much,
+              I love you so much,
+                  😭🫀🫂💞
+     10,000 thankyous for being in my life. 🧡
+
+       You deserve every good thing life has to offer.  
+Stay kind, stay genuine, and never forget — you’re appreciated more than words can express. 🧡  
+
+Yours,  
+Tedduu 🧸 💌`;
+
+const buttons = Array.from(document.querySelectorAll(".emoji-btn"));
+let sequence = [];
+let userSequence = [];
+const maxSteps = 4;
+
+// Generate random emoji sequence
+function generateSequence() {
+  sequence = [];
+  for(let i=0; i<maxSteps; i++){
+    const randomIndex = Math.floor(Math.random()*buttons.length);
+    sequence.push(buttons[randomIndex].textContent);
+  }
+}
+
+// Play sequence visually
+function playSequence() {
+  let i=0;
+  const interval = setInterval(() => {
+    buttons.forEach(b => b.classList.remove("active"));
+    const btn = buttons.find(b => b.textContent === sequence[i]);
+    btn.classList.add("active");
+    i++;
+    if(i>=sequence.length){
+      clearInterval(interval);
+      setTimeout(()=>buttons.forEach(b => b.classList.remove("active")), 400);
     }
+  }, 600);
+}
 
-    // Quiz logic
-    const questions = [
-      { q: "Kya tum Mujhe sacchi mein dost samjhte ho?", options: ["Yes", "No"], correct: 0 },
-      { q: "Kya tum mere liye special ho?", options: ["Yes", "No"], correct: 0 },
-      { q: "Kya tum kabhi mujhe chhodo ge?", options: ["Yes", "No"], correct: 1 }
-    ];
+// Handle user click
+buttons.forEach(btn => {
+  btn.addEventListener("click", e => {
+    userSequence.push(e.target.textContent);
+    e.target.classList.add("active");
+    setTimeout(()=>e.target.classList.remove("active"),200);
 
-    let idx = 0;
-    const quizInner = document.getElementById('quizInner');
-    const nextBtn = document.getElementById('nextBtn');
-    const prevBtn = document.getElementById('prevBtn');
-    const feedback = document.getElementById('feedback');
-
-    function renderQuestion(i) {
-      const item = questions[i];
-      quizInner.innerHTML = `
-        <div class="question">${i+1}. ${item.q}</div>
-        <div class="options">
-          ${item.options.map((opt, j)=>`<div class="option" data-index="${j}">${opt}</div>`).join('')}
-        </div>
-      `;
-      document.querySelectorAll('.option').forEach(el=>{
-        el.addEventListener('click', ()=>{
-          document.querySelectorAll('.option').forEach(o=>o.classList.remove('selected'));
-          el.classList.add('selected');
-          feedback.textContent = '';
-        });
-      });
-      prevBtn.style.display = i>0 ? 'inline-block' : 'none';
-      nextBtn.textContent = i === 0 ? 'Next' : (i === questions.length-1 ? 'Finish' : 'Next');
-    }
-
-    nextBtn.addEventListener('click', ()=>{
-      const selected = document.querySelector('.option.selected');
-      if(!selected){ feedback.style.color = '#ffdede'; feedback.textContent = 'Please choose an option.'; return; }
-      const chosen = Number(selected.dataset.index);
-      const correct = questions[idx].correct;
-      if(chosen !== correct){
-        feedback.style.color = '#ffdede';
-        feedback.textContent = 'Not quite right. Try again.';
-        selected.animate([{ transform: 'translateX(0)' },{ transform: 'translateX(-6px)' },{ transform: 'translateX(6px)' },{ transform: 'translateX(0)' }], { duration: 300 });
+    // Check sequence so far
+    for(let i=0;i<userSequence.length;i++){
+      if(userSequence[i] !== sequence[i]){
+        userSequence=[];
+        alert("Oops! Try again.");
+        playSequence();
         return;
       }
-      feedback.style.color = '#e0ffd6';
-      feedback.textContent = 'Nice!';
-      if(idx < questions.length - 1){
-        idx++;
-        setTimeout(()=>{ feedback.textContent = ''; renderQuestion(idx); }, 450);
-      } else {
-        document.getElementById('quizBox').style.display = 'none';
-        revealCards();
-      }
-    });
-
-    prevBtn.addEventListener('click', ()=>{ if(idx>0){ idx--; renderQuestion(idx); feedback.textContent = ''; } });
-
-    function revealCards(){
-      const area = document.getElementById('cardsArea');
-      const cards = Array.from(document.querySelectorAll('.card'));
-      area.style.display = 'block';
-      cards.forEach((c, i)=>{ setTimeout(()=> c.classList.add('show'), i * 350); });
-      setTimeout(()=> area.scrollIntoView({behavior:'smooth', block:'center'}), 100);
     }
 
-    renderQuestion(0);
-  </script>
+    // Complete
+    if(userSequence.length === sequence.length){
+      unlockLetter();
+    }
+  });
+});
+
+const letterDiv = document.getElementById("letter");
+const nextBtn = document.getElementById("nextBtn");
+let i = 0;
+const speed = 30;
+
+function unlockLetter() {
+  document.getElementById("game").style.display = "none";
+  letterDiv.style.display = "block";
+  typeLetter();
+}
+
+// Typing animation
+function typeLetter() {
+  if (i < letterText.length) {
+    letterDiv.innerHTML += letterText.charAt(i);
+    i++;
+    setTimeout(typeLetter, speed);
+  } else {
+    nextBtn.style.display = "inline-block";
+    startCelebration();
+  }
+}
+
+// Emoji Celebration
+function startCelebration() {
+  const emojis = ["🧸","🧡","😸","💕","💛","😘","🥰"];
+  
+  function createEmoji() {
+    const emoji = document.createElement("div");
+    emoji.classList.add("emoji");
+    emoji.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+    emoji.style.left = Math.random() * 100 + "vw";
+    emoji.style.fontSize = Math.random() * 24 + 16 + "px";
+    document.body.appendChild(emoji);
+
+    const duration = Math.random() * 3 + 3;
+    emoji.animate([
+      { transform: `translateY(0) rotate(0deg)` },
+      { transform: `translateY(100vh) rotate(${Math.random()*360}deg)` }
+    ], {
+      duration: duration * 1000,
+      iterations: 10,
+      easing: "linear"
+    });
+
+    setTimeout(() => emoji.remove(), duration * 1000);
+  }
+
+  let count = 0;
+  const interval = setInterval(() => {
+    createEmoji();
+    count++;
+    if (count > 25) clearInterval(interval);
+  }, 200);
+}
+
+function nextDay() {
+  window.location.href = "day7.html";
+}
+
+// Initialize game
+generateSequence();
+setTimeout(playSequence,500);
+</script>
+
 </body>
 </html>
-
-
