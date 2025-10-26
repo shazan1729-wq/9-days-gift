@@ -65,15 +65,16 @@
     width: 80%;
     max-width: 650px;
     line-height: 1.7;
- 
     white-space: pre-wrap;
     overflow: hidden;
     margin-top: 20px;
   }
 
+  /* Always visible Next button */
   #nextBtn {
-    margin-top: 20px;
-    display: none;
+    position: absolute;
+    bottom: 60px;
+    right: 30px;
     background: #fff;
     color: #8e2de2;
     border: none;
@@ -83,12 +84,18 @@
     cursor: pointer;
     box-shadow: 0 0 15px rgba(255,255,255,0.7);
     transition: 0.3s;
+    animation: glow 2s infinite alternate;
   }
 
   #nextBtn:hover {
     background: #ff0080;
     color: #fff;
     transform: scale(1.1);
+  }
+
+  @keyframes glow {
+    from { box-shadow: 0 0 10px rgba(255,255,255,0.6); }
+    to { box-shadow: 0 0 25px rgba(255,255,255,1); }
   }
 
   .emoji {
@@ -112,16 +119,16 @@
 
 <h1>Day 6: A Letter to My Budduu 😉🧡💌</h1>
 
-
 <div id="game">
   <button class="emoji-btn">🧡</button>
   <button class="emoji-btn">✨</button>
   <button class="emoji-btn">🧸</button>
   <button class="emoji-btn">💝</button>
-  <button class="emoji-btn">💗</button>
 </div>
 
 <div id="letter"></div>
+
+<!-- Always visible Next button -->
 <button id="nextBtn" onclick="nextDay()">Go to Day 7 ➜</button>
 
 <audio id="bg-music" src="https://cdn.pixabay.com/audio/2022/03/15/audio_c5c3e35a58.mp3" autoplay loop></audio>
@@ -173,7 +180,7 @@ Thankyouuu sooo much for being my biggest supporter,
      Thankyou soo much for caring about me,
         I really appreciate you so much,
               I love you so much,
-                  😭🫀🫂💞
+                   😭🫀🫂💞
      10,000 thankyous for being in my life. 🧡
 
        You deserve every good thing life has to offer.  
@@ -190,53 +197,50 @@ const maxSteps = 4;
 // Generate random emoji sequence
 function generateSequence() {
   sequence = [];
-  for(let i=0; i<maxSteps; i++){
-    const randomIndex = Math.floor(Math.random()*buttons.length);
+  for (let i = 0; i < maxSteps; i++) {
+    const randomIndex = Math.floor(Math.random() * buttons.length);
     sequence.push(buttons[randomIndex].textContent);
   }
 }
 
 // Play sequence visually
 function playSequence() {
-  let i=0;
+  let i = 0;
   const interval = setInterval(() => {
     buttons.forEach(b => b.classList.remove("active"));
     const btn = buttons.find(b => b.textContent === sequence[i]);
     btn.classList.add("active");
     i++;
-    if(i>=sequence.length){
+    if (i >= sequence.length) {
       clearInterval(interval);
-      setTimeout(()=>buttons.forEach(b => b.classList.remove("active")), 400);
+      setTimeout(() => buttons.forEach(b => b.classList.remove("active")), 400);
     }
   }, 600);
 }
 
-// Handle user click
+// Handle user clicks
 buttons.forEach(btn => {
   btn.addEventListener("click", e => {
     userSequence.push(e.target.textContent);
     e.target.classList.add("active");
-    setTimeout(()=>e.target.classList.remove("active"),200);
+    setTimeout(() => e.target.classList.remove("active"), 200);
 
-    // Check sequence so far
-    for(let i=0;i<userSequence.length;i++){
-      if(userSequence[i] !== sequence[i]){
-        userSequence=[];
-        alert("Oops! Try again.");
+    for (let i = 0; i < userSequence.length; i++) {
+      if (userSequence[i] !== sequence[i]) {
+        userSequence = [];
+        alert("Oops! Try again 🥺");
         playSequence();
         return;
       }
     }
 
-    // Complete
-    if(userSequence.length === sequence.length){
+    if (userSequence.length === sequence.length) {
       unlockLetter();
     }
   });
 });
 
 const letterDiv = document.getElementById("letter");
-const nextBtn = document.getElementById("nextBtn");
 let i = 0;
 const speed = 30;
 
@@ -253,15 +257,14 @@ function typeLetter() {
     i++;
     setTimeout(typeLetter, speed);
   } else {
-    nextBtn.style.display = "inline-block";
     startCelebration();
   }
 }
 
 // Emoji Celebration
 function startCelebration() {
-  const emojis = ["🧸","🧡","😸","💕","💛","😘","🥰"];
-  
+  const emojis = ["🧸", "🧡", "😸", "✨", "💛", "😘"];
+
   function createEmoji() {
     const emoji = document.createElement("div");
     emoji.classList.add("emoji");
@@ -273,10 +276,10 @@ function startCelebration() {
     const duration = Math.random() * 3 + 3;
     emoji.animate([
       { transform: `translateY(0) rotate(0deg)` },
-      { transform: `translateY(100vh) rotate(${Math.random()*360}deg)` }
+      { transform: `translateY(100vh) rotate(${Math.random() * 360}deg)` }
     ], {
       duration: duration * 1000,
-      iterations: 10,
+      iterations: 1,
       easing: "linear"
     });
 
@@ -297,7 +300,7 @@ function nextDay() {
 
 // Initialize game
 generateSequence();
-setTimeout(playSequence,500);
+setTimeout(playSequence, 500);
 </script>
 
 </body>
