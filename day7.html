@@ -1,242 +1,274 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Day 5 | Reasons Why You’re Special 💛</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Day 7 | Fun Quiz About Us 🎮</title>
+<style>
+  body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #007bff, #8e2de2, #ff0080);
+    background-size: 200% 200%;
+    animation: gradientMove 8s ease infinite;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    color: #fff;
+    text-align: center;
+    overflow: hidden;
+  }
 
-  <style>
-    :root{--accent:#ff8000}
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(135deg, #007bff, #8e2de2, #ff0080);
-      background-size: 200% 200%;
-      animation: gradientMove 8s ease infinite;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      overflow: hidden;
-      text-align: center;
-    }
+  @keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
 
-    @keyframes gradientMove {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    text-shadow: 0 0 20px #fff;
+  }
 
-    .stage {
-      width: 95%;
-      max-width: 760px;
-      margin: 40px auto;
-      position: relative;
-    }
+  .game-container {
+    display: grid;
+    grid-template-columns: repeat(4, 80px);
+    grid-gap: 12px;
+    margin-top: 20px;
+  }
 
-    h1 { margin: 0 0 8px; font-size: 1.9rem; text-shadow: 0 0 20px rgba(0,0,0,0.25); }
-    p { margin: 0 0 20px; opacity: 0.95 }
+  .card {
+    width: 80px;
+    height: 80px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: transform 0.4s, background 0.3s;
+  }
 
-    .quiz {
-      background: rgba(255,255,255,0.14);
-      backdrop-filter: blur(6px);
-      border-radius: 14px;
-      padding: 22px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.25);
-      color: #fff;
-    }
+  .card.flipped {
+    background: #ffffff;
+    color: #ff0080;
+    transform: rotateY(180deg);
+  }
 
-    .question { font-size: 1.05rem; margin-bottom: 12px; }
+  #message {
+    margin-top: 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
 
-    .options { display:flex; flex-direction:column; gap:10px; }
-    .option {
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.08);
-      padding: 10px 14px;
-      border-radius: 10px;
-      cursor: pointer;
-      transition: transform .15s ease, background .2s ease;
-      text-align: left;
-    }
-    .option:hover { transform: translateY(-3px); }
-    .option.selected { background: rgba(255,255,255,0.25); }
+  #quiz-section {
+    display: none;
+  }
 
-    .controls { display:flex; justify-content:space-between; align-items:center; margin-top:16px; }
-    .btn {
-      background:#fff; color: var(--accent); border:none; padding:10px 18px; border-radius:10px; font-weight:600; cursor:pointer;
-      box-shadow: 0 6px 20px rgba(0,0,0,0.15);
-    }
+  .quiz-container {
+    background: rgba(255,255,255,0.15);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 0 25px rgba(255,255,255,0.3);
+    width: 90%;
+    max-width: 500px;
+    margin-top: 20px;
+    backdrop-filter: blur(6px);
+  }
 
-    .cards-wrap { margin-top:22px; }
-    .container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-    }
-
-    .card {
-      background: rgba(255, 255, 255, 0.18);
-      backdrop-filter: blur(5px);
-      border-radius: 14px;
-      padding: 16px 18px;
-      margin: 12px 0;
-      width: 100%;
-      max-width: 620px;
-      color: #fff;
-      font-size: 1.05rem;
-      box-shadow: 0 6px 24px rgba(0,0,0,0.2);
-      opacity: 0;
-      transform: translateY(18px) scale(0.995);
-      transition: opacity 480ms cubic-bezier(.2,.9,.23,1), transform 480ms cubic-bezier(.2,.9,.23,1);
-    }
-    .card.show { opacity: 1; transform: translateY(0) scale(1); }
-
-    .next-day { margin: 26px 0 60px; }
-
-    footer { position: absolute; bottom: 12px; left: 0; right: 0; text-align:center; font-size:0.92rem; opacity:0.9 }
-
-    @media (max-width:520px){ h1{font-size:1.4rem} .quiz{padding:16px} }
-  </style>
+  .question { font-size: 1.2rem; margin-bottom: 20px; }
+  .options button {
+    display: block;
+    width: 100%;
+    background: #fff;
+    color: #8e2de2;
+    border: none;
+    border-radius: 8px;
+    margin: 8px 0;
+    padding: 12px;
+    font-size: 1rem;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s ease;
+  }
+  .options button:hover { background: #ff0080; color: #fff; transform: scale(1.05); }
+  #result { margin-top: 20px; font-size: 1.2rem; font-weight: bold; }
+  button#next, button#nextDayBtn {
+    margin-top: 15px;
+    background: #fff;
+    color: #8e2de2;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    display: none;
+  }
+  button#next:hover, button#nextDayBtn:hover { background: #ff0080; color: #fff; }
+  footer { position: absolute; bottom: 10px; font-size: 0.9rem; opacity: 0.8; }
+</style>
 </head>
+<body>
 
-<body style="display:none;" id="mainBody">
-  <div class="stage" id="stage">
-    <div class="quiz" id="quizBox">
-      <h1>Day 5: Reasons Why You’re Special 🧡</h1>
-      <p>Faizan, Tedduu's 🧸 Budduu🧡 — solve the quick quiz to unlock the notes one by one.</p>
+<h1>💞 Memory Match to Unlock Quiz 💞</h1>
+<div id="memory-game">
+  <div class="game-container" id="game-board"></div>
+  <div id="message"></div>
+</div>
 
-      <div id="quizInner"></div>
-
-      <div class="controls">
-        <div id="feedback" style="color:#fff; opacity:0.95"></div>
-        <div>
-          <button class="btn" id="prevBtn" style="margin-right:8px; display:none;">Back</button>
-          <button class="btn" id="nextBtn">Start</button>
-        </div>
-      </div>
+<!-- Hidden quiz section (unlocks later) -->
+<div id="quiz-section">
+  <h1>Day 7: Fun Quiz About Us 🧡 🧸</h1>
+  <div class="quiz-container">
+    <div id="quiz">
+      <div class="question" id="question">Loading question...</div>
+      <div class="options" id="options"></div>
+      <div id="result"></div>
+      <button id="next" onclick="nextQuestion()">Next ➜</button>
+      <button id="nextDayBtn" onclick="nextDay()">Go to Day 8 ➜</button>
     </div>
-
-    <div class="cards-wrap" id="cardsArea" style="display:none;">
-      <div class="container" id="cardsContainer">
-        <div class="card">1️⃣ You know me very well and respect me.💝</div>
-        <div class="card">2️⃣ You always make me feel seen and valued.💗</div>
-        <div class="card">3️⃣ You can turn an ordinary day into something memorable.🧡</div>
-        <div class="card">4️⃣ You care deeply — even when you pretend you don’t. 💛</div>
-        <div class="card">5️⃣ You have this peaceful aura that makes me calm.</div>
-        <div class="card">6️⃣ You’re not just a friend… you’re a comfort zone. 🫶</div>
-        <div class="card">7️⃣ You remind me that I have some values. 🌸</div>
-        <div class="card">8️⃣ You always know how to make me laugh! 😂</div>
-        <div class="card">9️⃣ You make life feel lighter — just by being in it. 😉</div>
-      </div>
-
-      <div class="next-day">
-        <button class="btn" onclick="location.href='day6.html'">Next ➜</button>
-      </div>
-    </div>
-
-    <footer>Created with 💛 by Tedduu 🧸</footer>
   </div>
+</div>
 
-  <script>
-    // Unlock date setup
-    const unlockDate = new Date("2025-10-27T00:00:00");
-    const today = new Date();
+<footer>Made with ❤️ by Tedduu 🧸 for Budduu 🧡</footer>
 
-    if (today < unlockDate) {
-      document.body.style.display = "flex";
-      document.body.innerHTML = `
-        <div style="
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          height: 100vh;
-          width: 100%;
-          text-align: center;
-          background: #141329;
-          color: #fff;
-          font-family: 'Poppins', sans-serif;
-        ">
-          <h2 style="font-size:1.6rem;text-shadow:0 0 10px rgba(255,255,255,0.6);">
-            This page unlocks on Monday, October 27, 2025.<br>
-		Come Tomorrow for Fun & Game 😁
-          </h2>
-        </div>
-      `;
-      throw new Error("Locked until unlock date");
+<script>
+  // 💖 MEMORY GAME SETUP
+  const emojis = ['💛', '🧸', '😸', '🧡', '🌈', '✨'];
+  let cards = [...emojis, ...emojis];
+  cards.sort(() => Math.random() - 0.5);
+  const board = document.getElementById('game-board');
+  let firstCard = null;
+  let lockBoard = false;
+  let matchedPairs = 0;
+
+  cards.forEach((emoji, i) => {
+    const card = document.createElement('div');
+    card.classList.add('card');
+    card.dataset.value = emoji;
+    card.onclick = () => flipCard(card);
+    board.appendChild(card);
+  });
+
+  function flipCard(card) {
+    if (lockBoard || card.classList.contains('flipped')) return;
+    card.classList.add('flipped');
+    card.textContent = card.dataset.value;
+
+    if (!firstCard) {
+      firstCard = card;
     } else {
-      document.getElementById("mainBody").style.display = "block";
-    }
-
-    // Quiz logic
-    const questions = [
-      { q: "Kya tum Mujhe sacchi mein dost samjhte ho?", options: ["Yes", "No"], correct: 0 },
-      { q: "Kya tum mere liye special ho?", options: ["Yes", "No"], correct: 0 },
-      { q: "Kya tum kabhi mujhe chhodo ge?", options: ["Yes", "No"], correct: 1 }
-    ];
-
-    let idx = 0;
-    const quizInner = document.getElementById('quizInner');
-    const nextBtn = document.getElementById('nextBtn');
-    const prevBtn = document.getElementById('prevBtn');
-    const feedback = document.getElementById('feedback');
-
-    function renderQuestion(i) {
-      const item = questions[i];
-      quizInner.innerHTML = `
-        <div class="question">${i+1}. ${item.q}</div>
-        <div class="options">
-          ${item.options.map((opt, j)=>`<div class="option" data-index="${j}">${opt}</div>`).join('')}
-        </div>
-      `;
-      document.querySelectorAll('.option').forEach(el=>{
-        el.addEventListener('click', ()=>{
-          document.querySelectorAll('.option').forEach(o=>o.classList.remove('selected'));
-          el.classList.add('selected');
-          feedback.textContent = '';
-        });
-      });
-      prevBtn.style.display = i>0 ? 'inline-block' : 'none';
-      nextBtn.textContent = i === 0 ? 'Next' : (i === questions.length-1 ? 'Finish' : 'Next');
-    }
-
-    nextBtn.addEventListener('click', ()=>{
-      const selected = document.querySelector('.option.selected');
-      if(!selected){ feedback.style.color = '#ffdede'; feedback.textContent = 'Please choose an option.'; return; }
-      const chosen = Number(selected.dataset.index);
-      const correct = questions[idx].correct;
-      if(chosen !== correct){
-        feedback.style.color = '#ffdede';
-        feedback.textContent = 'Not quite right. Try again.';
-        selected.animate([{ transform: 'translateX(0)' },{ transform: 'translateX(-6px)' },{ transform: 'translateX(6px)' },{ transform: 'translateX(0)' }], { duration: 300 });
-        return;
-      }
-      feedback.style.color = '#e0ffd6';
-      feedback.textContent = 'Nice!';
-      if(idx < questions.length - 1){
-        idx++;
-        setTimeout(()=>{ feedback.textContent = ''; renderQuestion(idx); }, 450);
+      lockBoard = true;
+      if (card.dataset.value === firstCard.dataset.value) {
+        matchedPairs++;
+        firstCard = null;
+        lockBoard = false;
+        if (matchedPairs === emojis.length) {
+          document.getElementById('message').innerHTML = 
+            "🎉 Yay Budduu! You matched all pairs! Quiz unlocked 🎮💞";
+          setTimeout(() => {
+            document.getElementById('memory-game').style.display = 'none';
+            document.getElementById('quiz-section').style.display = 'block';
+          }, 2000);
+        }
       } else {
-        document.getElementById('quizBox').style.display = 'none';
-        revealCards();
+        setTimeout(() => {
+          card.classList.remove('flipped');
+          card.textContent = '';
+          firstCard.classList.remove('flipped');
+          firstCard.textContent = '';
+          firstCard = null;
+          lockBoard = false;
+        }, 800);
       }
-    });
-
-    prevBtn.addEventListener('click', ()=>{ if(idx>0){ idx--; renderQuestion(idx); feedback.textContent = ''; } });
-
-    function revealCards(){
-      const area = document.getElementById('cardsArea');
-      const cards = Array.from(document.querySelectorAll('.card'));
-      area.style.display = 'block';
-      cards.forEach((c, i)=>{ setTimeout(()=> c.classList.add('show'), i * 350); });
-      setTimeout(()=> area.scrollIntoView({behavior:'smooth', block:'center'}), 100);
     }
+  }
 
-    renderQuestion(0);
-  </script>
+  // 🎮 QUIZ SECTION (same as your quiz)
+  const quizData = [
+    { question: "Who always forgets things first? 😅", options: ["Budduu🧡", "Tedduu🧸", "Both 😝", "None"], answer: "Budduu🧡" },
+    { question: "What’s our favorite thing to do together?", options: ["Laugh endlessly 😂", "Talk about random stuff", "Eat Food Together", "Support Each Other ", "All of these 💛"], answer: "All of these 💛" },
+    { question: "Who gives the best advice?", options: ["Budduu🧡", "Tedduu🧸", "Someone Else", "No one"], answer: "Budduu🧡" },
+    { question: "What’s Budduu’s secret superpower?", options: ["Making me smile 😊", "Eating fast 🍕", "Vanishing suddenly 🕵️", "Supporting me anytime when I need  ✨"], answer: "Supporting me anytime when I need  ✨"},
+    { question: "If we were a team, our name would be...?", options: ["The Budduu Squad", "#ShaZan", "BudduTedduu's Power ", "Dynamic Duo"], answer: "#ShaZan" },
+    { question: "If you could describe Tedduu , it would be...?", options: ["Amazing", "Supportive", "Kind-hearted", "All of the above 💖"], answer: "All of the above 💖"},
+    { question: "Do we need some changes in our friendship?", options: ["Yes", "No", "Maybe", "Forever Budduu and Tedduu 🧡🧸"], answer: "Forever Budduu and Tedduu 🧡🧸" },
+    { question: "What we have is...", options: ["Just friendship 🧑‍🤝‍🧑", "Something special 💞", "Temporary", "Ordinary"], answer: "Something special 💞" },
+    { question: "What’s the best thing about our friendship?", options: ["We understand each other", "We have fun together", "We support each other", "All of these 💛"], answer: "All of these 💛" },
+    { question: "What’s our friendship level on a scale of 10 to 100?", options: ["50", "70", "90", " 💯"], answer: " 💯" },
+    { question: "What do you value most in our friendship?", options: ["Trust", "Laughter", "Support", "All of the above 💖"], answer: "All of the above 💖" },
+    { question: "What’s our friendship motto?", options: ["Forever Budduu and Tedduu 🧡🧸", "Through thick and thin", "Best friends for life", "Partners in crime 💫"], answer: "Forever Budduu and Tedduu 🧡🧸" },
+    { question: "What’s one thing you’d like to do together in the future?", options: ["Travel the world 🌍", "Always trust each other 💗", "Create memories 📸", "All of these 💛"], answer: "All of these 💛" },
+    { question: "If I  die because of some reason, what you will do?", options: ["Cry", "Remember me forever 🧡", "Move on", "Celebrate because your problem is gone 🎉"], answer: "Remember me forever 🧡"},
+    { question: "If I died someday, Can you be my children's Buddy Uncle?", options: ["I think about it", "Of Course ", "Maybe", "No"], answer: "Of Course "},
+  ];
+
+  let current = 0;
+  let score = 0;
+  const questionEl = document.getElementById("question");
+  const optionsEl = document.getElementById("options");
+  const resultEl = document.getElementById("result");
+  const nextBtn = document.getElementById("next");
+  const nextDayBtn = document.getElementById("nextDayBtn");
+ 
+  function loadQuestion() {
+    resultEl.textContent = "";
+    nextBtn.style.display = "none";
+    nextDayBtn.style.display = "none";
+    const q = quizData[current];
+    questionEl.textContent = q.question;
+    optionsEl.innerHTML = "";
+    q.options.forEach(opt => {
+      const btn = document.createElement("button");
+      btn.textContent = opt;
+      btn.onclick = () => checkAnswer(opt);
+      optionsEl.appendChild(btn);
+    });
+  }
+
+  function checkAnswer(selected) {
+    const correct = quizData[current].answer;
+    if (selected === correct) {
+      resultEl.textContent = "✅ Correct!🥳";
+      score++;
+    } else {
+      resultEl.textContent = "❌😭 Oops! It was: " + correct;
+    }
+    Array.from(optionsEl.children).forEach(btn => btn.disabled = true);
+    if (current < quizData.length - 1) {
+      nextBtn.style.display = "inline-block";
+    } else {
+      nextDayBtn.style.display = "inline-block";
+    }
+  }
+
+  function nextQuestion() {
+    current++;
+    if (current < quizData.length) loadQuestion();
+  }
+
+  function nextDay() {
+    showFinal();
+    setTimeout(() => {
+      window.location.href = "day8.html";
+    }, 20000);
+  }
+
+  function showFinal() {
+    questionEl.textContent = "🎉 Quiz Complete!";
+    optionsEl.innerHTML = "";
+    resultEl.innerHTML = `You got <b>${score}</b> out of <b>${quizData.length}</b> right, Budduu!<br><br>
+      No matter the score — we both win 💛 because our friendship is the best combo ever! 🫶`;
+    nextBtn.style.display = "none";
+    nextDayBtn.style.display = "inline-block";
+  }
+
+  // Start the memory game
+  loadQuestion();
+</script>
 </body>
 </html>
-
