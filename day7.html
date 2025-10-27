@@ -8,7 +8,7 @@
   body {
     margin: 0;
     font-family: 'Poppins', sans-serif;
-    background:linear-gradient(135deg, #f03f1b 10%, #42ffe0 30%, #fe22fa 70%, #eae608 100%);
+    background: linear-gradient(135deg, #f03f1b 10%, #42ffe0 30%, #fe22fa 70%, #eae608 100%);
     background-size: 200% 200%;
     animation: gradientMove 8s ease infinite;
     display: flex;
@@ -54,7 +54,7 @@
   }
 
   .card.flipped {
-    background: #ffffff;
+    background: #fff;
     color: #ff0080;
     transform: rotateY(180deg);
   }
@@ -81,6 +81,7 @@
   }
 
   .question { font-size: 1.2rem; margin-bottom: 20px; }
+
   .options button {
     display: block;
     width: 100%;
@@ -95,9 +96,20 @@
     font-weight: bold;
     transition: all 0.3s ease;
   }
-  .options button:hover { background: #ff0080; color: #fff; transform: scale(1.05); }
-  #result { margin-top: 20px; font-size: 1.2rem; font-weight: bold; }
-  button#next, button#nextDayBtn {
+
+  .options button:hover {
+    background: #ff0080;
+    color: #fff;
+    transform: scale(1.05);
+  }
+
+  #result {
+    margin-top: 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+
+  button#next {
     margin-top: 15px;
     background: #fff;
     color: #8e2de2;
@@ -106,21 +118,55 @@
     border-radius: 8px;
     cursor: pointer;
     font-weight: bold;
-    display: none;
   }
-  button#next:hover, button#nextDayBtn:hover { background: #ff0080; color: #fff; }
-  footer { position: absolute; bottom: 10px; font-size: 0.9rem; opacity: 0.8; }
+
+  button#next:hover {
+    background: #ff0080;
+    color: #fff;
+  }
+
+  /* Always visible next-day button styling */
+  #nextDayBtn {
+    position: absolute;
+    bottom: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: inline-block;
+    background: #fff;
+    color: #8e2de2;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    opacity: 0.9;
+    transition: all 0.3s ease;
+  }
+
+  #nextDayBtn:hover {
+    background: #ff0080;
+    color: #fff;
+    transform: translateX(-50%) scale(1.05);
+  }
+
+  footer {
+    position: absolute;
+    bottom: 10px;
+    font-size: 0.9rem;
+    opacity: 0.8;
+  }
 </style>
 </head>
 <body>
 
 <h1>💞 Memory Match to Unlock Quiz 💞</h1>
+
 <div id="memory-game">
   <div class="game-container" id="game-board"></div>
   <div id="message"></div>
 </div>
 
-<!-- Hidden quiz section (unlocks later) -->
+<!-- Hidden quiz section -->
 <div id="quiz-section">
   <h1>Day 7: Fun Quiz About Us 🧡 🧸</h1>
   <div class="quiz-container">
@@ -129,10 +175,12 @@
       <div class="options" id="options"></div>
       <div id="result"></div>
       <button id="next" onclick="nextQuestion()">Next ➜</button>
-      <button id="nextDayBtn" onclick="nextDay()">Go to Day 8 ➜</button>
     </div>
   </div>
 </div>
+
+<!-- Always visible Next Day Button -->
+<button id="nextDayBtn" onclick="nextDay()">Go to Day 8 ➜</button>
 
 <footer>Made with ❤️ by Tedduu 🧸 for Budduu 🧡</footer>
 
@@ -146,7 +194,7 @@
   let lockBoard = false;
   let matchedPairs = 0;
 
-  cards.forEach((emoji, i) => {
+  cards.forEach(emoji => {
     const card = document.createElement('div');
     card.classList.add('card');
     card.dataset.value = emoji;
@@ -188,7 +236,7 @@
     }
   }
 
-  // 🎮 QUIZ SECTION (same as your quiz)
+  // 🎮 QUIZ SECTION
   const quizData = [
     { question: "Who always forgets things first? 😅", options: ["Budduu🧡", "Tedduu🧸", "Both 😝", "None"], answer: "Budduu🧡" },
     { question: "What’s our favorite thing to do together?", options: ["Laugh endlessly 😂", "Talk about random stuff", "Eat Food Together", "Support Each Other ", "All of these 💛"], answer: "All of these 💛" },
@@ -204,8 +252,9 @@
     { question: "What’s our friendship motto?", options: ["Forever Budduu and Tedduu 🧡🧸", "Through thick and thin", "Best friends for life", "Partners in crime 💫"], answer: "Forever Budduu and Tedduu 🧡🧸" },
     { question: "What’s one thing you’d like to do together in the future?", options: ["Travel the world 🌍", "Always trust each other 💗", "Create memories 📸", "All of these 💛"], answer: "All of these 💛" },
     { question: "If I  die because of some reason, what you will do?", options: ["Cry", "Remember me forever 🧡", "Move on", "Celebrate because your problem is gone 🎉"], answer: "Remember me forever 🧡"},
-    { question: "If I died someday, Can you be my children's Buddy Uncle?", options: ["I think about it", "Of Course ", "Maybe", "No"], answer: "Of Course "},
+    { question: "If I Died someday, can you be my children's Buddy Uncle?", options: ["I think about it", "Of Course ", "Maybe", "No"], answer: "Of Course "},
   ];
+
 
   let current = 0;
   let score = 0;
@@ -213,12 +262,10 @@
   const optionsEl = document.getElementById("options");
   const resultEl = document.getElementById("result");
   const nextBtn = document.getElementById("next");
-  const nextDayBtn = document.getElementById("nextDayBtn");
- 
+
   function loadQuestion() {
     resultEl.textContent = "";
     nextBtn.style.display = "none";
-    nextDayBtn.style.display = "none";
     const q = quizData[current];
     questionEl.textContent = q.question;
     optionsEl.innerHTML = "";
@@ -233,16 +280,14 @@
   function checkAnswer(selected) {
     const correct = quizData[current].answer;
     if (selected === correct) {
-      resultEl.textContent = "✅ Correct!🥳";
+      resultEl.textContent = "✅ Correct!";
       score++;
     } else {
-      resultEl.textContent = "❌😭 Oops! It was: " + correct;
+      resultEl.textContent = "❌ Oops! It was: " + correct;
     }
     Array.from(optionsEl.children).forEach(btn => btn.disabled = true);
     if (current < quizData.length - 1) {
       nextBtn.style.display = "inline-block";
-    } else {
-      nextDayBtn.style.display = "inline-block";
     }
   }
 
@@ -252,24 +297,10 @@
   }
 
   function nextDay() {
-    showFinal();
-    setTimeout(() => {
-      window.location.href = "day8.html";
-    }, 20000);
+    window.location.href = "day8.html";
   }
 
-  function showFinal() {
-    questionEl.textContent = "🎉 Quiz Complete!";
-    optionsEl.innerHTML = "";
-    resultEl.innerHTML = `You got <b>${score}</b> out of <b>${quizData.length}</b> right, Budduu!<br><br>
-      No matter the score — we both win 💛 because our friendship is the best combo ever! 🫶`;
-    nextBtn.style.display = "none";
-    nextDayBtn.style.display = "inline-block";
-  }
-
-  // Start the memory game
   loadQuestion();
 </script>
 </body>
 </html>
-
