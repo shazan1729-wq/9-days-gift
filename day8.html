@@ -1,207 +1,529 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Day 8 - Magic</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Day 8 - Magical Energy Wand Fortune 💫 (Cinematic Epic)</title>
   <style>
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: radial-gradient(ellipse at center, #FFF59D, #FFA726, #E53935);
-      background-size: 200% 200%;
-      animation: gradientMove 8s ease infinite;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      overflow: hidden;
-      color: #fff;
-      position: relative;
-      text-align: center;
+    :root{
+      --bg1:#f03f1b; --bg2:#42ffe0; --accent1:#fe22fa; --accent2:#eae608 ;
+      --soft-white: rgba(255,255,255,0.95);
     }
+    html,body{height:100%;margin:0;font-family:'Poppins',sans-serif;background:linear-gradient(135deg,var(--bg1) 10%,var(--bg2) 40%,var(--accent1) 70%,var(--accent2) 100%);background-size:200% 200%;animation:gradientMove 9s ease infinite; color:#fff;overflow:hidden; }
+    @keyframes gradientMove{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+    *{box-sizing:border-box}
 
-    @keyframes gradientMove {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
+    /* top title */
+    h1{position:absolute;top:18px;left:0;right:0;margin:0;font-size:1.4rem;text-align:center;pointer-events:none;text-shadow:0 6px 20px rgba(0,0,0,0.35);user-select:none}
 
-    .gallery-container {
-      perspective: 1000px;
-      width: 300px;
-      height: 400px;
-      position: relative;
-      display: none; /* hidden until unlocked */
-    }
+    /* centered layout */
+    .stage{position:relative;width:100%;height:100%;display:flex;align-items:center;justify-content:center;flex-direction:column;}
 
-    .photo-card {
-      width: 100%;
-      height: 100%;
-      position: absolute;
-      transition: transform 1s;
-      transform-style: preserve-3d;
-      cursor: pointer;
-    }
+    /* lock screen */
+    .lock-screen{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;z-index:60;backdrop-filter: blur(6px);background:linear-gradient(180deg, rgba(0,0,0,0.5), rgba(0,0,0,0.6));transition:opacity .6s ease}
+    .lock-card{background: rgba(10,8,20,0.35);border-radius:14px;padding:34px 36px;text-align:center;box-shadow:0 10px 40px rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.04)}
+    .lock-card h2{margin:0 0 8px;font-size:1.5rem}
+    .lock-card p{margin:0;color:rgba(255,255,255,0.9)}
 
-    .photo-card.flip {
-      transform: rotateY(180deg);
-    }
+    /* game container */
+    #gameWrap{display:none;flex-direction:column;align-items:center;gap:16px;opacity:0;transform:translateY(6px);transition:opacity .6s ease, transform .6s ease;z-index:30}
+    #uiTop{position: absolute;top:18px;right:18px;display:flex;gap:10px;align-items:center;z-index:40}
+    .hearts{display:flex;gap:8px}
+    .heart{width:34px;height:34px;border-radius:8px;background:linear-gradient(180deg,#ff6b6b,#ff3b3b);box-shadow:0 6px 20px rgba(255,50,50,0.18);display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff}
+    .levelBadge{background:rgba(255,255,255,0.06);padding:6px 10px;border-radius:10px;font-weight:600;text-shadow:0 2px 8px rgba(0,0,0,0.5)}
 
-    .front, .back {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 15px;
-      backface-visibility: hidden;
-      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    .circle{position:relative;width:360px;height:360px}
+    .orb{
+      position:absolute;
+      width:74px;height:74px;border-radius:50%;
+      background:radial-gradient(circle at 30% 25%, #fff, rgba(255,255,255,0.06) 8%, transparent 9%), linear-gradient(180deg,var(--accent1), var(--accent2));
+      box-shadow:0 8px 26px rgba(0,0,0,0.35), 0 0 36px rgba(0,188,212,0.12), inset 0 -6px 20px rgba(0,0,0,0.18);
+      transition: transform .18s ease, box-shadow .18s ease, filter .18s;
+      display:flex;align-items:center;justify-content:center;cursor:pointer;user-select:none;
+      filter: drop-shadow(0 18px 24px rgba(0,0,0,0.35));
     }
+    .orb:before{content:'';position:absolute;inset:0;border-radius:50%;opacity:.06;background:radial-gradient(circle at 40% 30%,rgba(255,255,255,0.18),transparent 35%)}
+    .orb.pulse{transform:scale(1.15);box-shadow:0 10px 60px rgba(0,188,212,0.25),0 0 140px rgba(142,36,170,0.12)}
+    .orb.wrong{animation:shake .36s; background:linear-gradient(180deg,#ff7f7f,#ff3b3b); box-shadow:0 10px 40px rgba(255,70,70,0.25)}
+    @keyframes shake{0%{transform:translateX(0)}25%{transform:translateX(-8px)}50%{transform:translateX(6px)}75%{transform:translateX(-4px)}100%{transform:translateX(0)}}
 
-    .front {
-      background-size: cover;
-      background-position: center;
-    }
+    /* cursor stardust */
+    .spark{position:fixed;pointer-events:none;width:8px;height:8px;border-radius:50%;background:radial-gradient(circle,#fff,#ffe9ff);opacity:0.95;transform:translate(-50%,-50%);mix-blend-mode:screen;filter:blur(.6px);z-index:120}
 
-    .back {
-      background: rgba(255,255,255,0.15);
-      backdrop-filter: blur(8px);
-      color: #fff;
-      text-align: center;
-      transform: rotateY(180deg);
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
+    /* info text */
+    #levelText{margin-top:8px;font-size:1.1rem;text-shadow:0 8px 24px rgba(0,0,0,.45)}
 
-    .back h2 {
-      margin-bottom: 10px;
-      font-size: 1.3em;
-    }
+    /* fortune container */
+    .fortune-container{display:none;flex-direction:column;align-items:center;gap:18px;opacity:0;transform:translateY(10px);transition:opacity .6s ease, transform .6s ease;z-index:20}
+    .aura-wrapper{position:relative;width:320px;height:320px;display:flex;align-items:center;justify-content:center}
+    .aura{position:absolute;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle, rgba(255,255,255,0.06), rgba(255,255,255,0.01));filter:blur(24px);box-shadow:0 0 140px rgba(0,188,212,0.08);transform:scale(.98);animation:auraPulse 3s ease-in-out infinite}
+    @keyframes auraPulse{0%{transform:scale(.98);opacity:.9}50%{transform:scale(1.07);opacity:1}100%{transform:scale(.98);opacity:.9}}
+    .magic-wand{width:14px;height:190px;border-radius:12px;background:linear-gradient(to top,var(--accent1),var(--accent2));box-shadow:0 0 30px rgba(0,188,212,0.15),0 0 80px rgba(142,36,170,0.08);position:relative;display:flex;align-items:flex-start;justify-content:center;cursor:pointer;transition:transform .6s cubic-bezier(.2,.9,.2,1)}
+    .magic-wand:before{content:'';position:absolute;top:-26px;left:50%;transform:translateX(-50%);width:36px;height:36px;border-radius:50%;background:radial-gradient(circle,#fff,#f2fbff 20%, var(--accent1) 40%);box-shadow:0 0 26px #fff,0 0 56px var(--accent1)}
+    .magic-wand.spin{transform:rotate(360deg) scale(1.02)}
 
-    .back p {
-      font-size: 1em;
-      line-height: 1.4em;
-    }
+    #fortuneText{font-size:1.2rem;opacity:0;text-shadow:0 6px 26px rgba(0,0,0,0.45)}
 
-    .next-btn {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(255,255,255,0.3);
-      color: #fff;
-      border: none;
-      padding: 10px 20px;
-      border-radius: 25px;
-      font-size: 1em;
-      cursor: pointer;
-      transition: 0.3s;
-    }
+    /* win cinematic */
+    .winBurst{position:absolute;inset:0;pointer-events:none;z-index:55}
+    .particle{position:absolute;width:8px;height:8px;border-radius:3px;background:linear-gradient(180deg,#fff,#ffd9ff);box-shadow:0 10px 30px rgba(0,0,0,0.2)}
 
-    .next-btn:hover {
-      background: rgba(255,255,255,0.6);
-    }
-    #photo-next { bottom: -60px; }
-    #day9-next { bottom: -110px; }
-    h1 {
-      position: absolute;
-      top: 20px;
-      width: 100%;
-      font-size: 1.6em;
-      text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
-      user-select: none;
-    }
-
-    /* Lock screen */
-    .lock-screen {
-      text-align: center;
-      color: #fff;
-      background: rgba(0, 0, 0, 0.5);
-      padding: 40px;
-      border-radius: 15px;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-      backdrop-filter: blur(6px);
-    }
-    .lock-screen h2 {
-      font-size: 1.5em;
-      margin-bottom: 10px;
-    }
-    .lock-screen p {
-      font-size: 1.1em;
-    }
+    /* small helpers */
+    .hidden{display:none}
+    .fadeIn{opacity:1;transform:none}
   </style>
 </head>
 <body>
+  <h1>💫 Day 8 - Magical Energy Wand 🪄<br> Click the Magical Stick </h1>
+  <div class="stage">
 
-  
-  <div class="lock-screen" id="lockScreen">
-    <h2>🔒 Locked</h2>
-    <p>This page will unlock on <b>October 28</b> 💛</p>
-  </div>
- <h1>🪄✨Something Magical is Coming ✨🪄<br>🎩🪄✨</h1>
-
-
-  <div class="gallery-container" id="galleryContainer">
-    <div class="photo-card" id="photoCard">
-      <div class="front" id="frontPhoto"></div>
-      <div class="back" id="backText">
-        <h2>Message 1</h2>
-        <p>That smile, that’s my favorite frame 💫</p>
+    <!-- Lock screen -->
+    <div class="lock-screen" id="lockScreen">
+      <div class="lock-card">
+        <h2>🔒 Locked</h2>
+        <p>This page will unlock on <b>October 28</b> 💛 — return then to claim the wand.</p>
       </div>
     </div>
-    <button class="next-btn" id="photo-next" onclick="nextPhoto()">Next ➜</button>
-    <button class="next-btn" id="day9-next" onclick="goToDay9()">Go to Day 9 ➜</button>
+
+    <!-- UI top (hearts + level) -->
+    <div id="uiTop" style="display:none">
+      <div class="hearts" id="heartsWrap">
+        <div class="heart" id="heart1">❤</div>
+        <div class="heart" id="heart2">❤</div>
+        <div class="heart" id="heart3">❤</div>
+      </div>
+      <div class="levelBadge" id="levelBadge">Level 1</div>
+    </div>
+
+    <!-- Game -->
+    <div id="gameWrap">
+      <div id="gameContainer" class="fadeIn" style="display:flex;flex-direction:column;align-items:center;">
+        <div class="circle" id="circle"></div>
+        <div id="levelText">Memorize the sequence and repeat it</div>
+      </div>
+    </div>
+
+    <!-- Fortune -->
+    <div class="fortune-container" id="fortuneContainer" aria-hidden="true">
+      <div class="aura-wrapper">
+        <div class="aura"></div>
+        <div class="magic-wand" id="magicWand" title="Click me for your fortune"></div>
+      </div>
+      <div id="fortuneText"></div>
+      <button onclick="goToDay82()" style="margin-top:10px;padding:10px 18px;border-radius:20px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.04);color:var(--soft-white);cursor:pointer">Next ➜</button>
+    </div>
+
+    <!-- cinematic overlay for bursts -->
+    <div id="winBurst" class="winBurst hidden"></div>
+
   </div>
 
+  <!-- audio -->
+  <!-- Background epic fantasy loop (royalty-free example) -->
+  <audio id="bgMusic" src="https://cdn.pixabay.com/download/audio/2021/09/17/audio_6b2f2d2dec.mp3?filename=magical-fairytale-ambient-110079.mp3" loop preload="auto"></audio>
+  <audio id="orbDing" src="https://www.soundjay.com/misc/sounds/bell-ringing-05.mp3" preload="auto"></audio>
+  <audio id="orbClick" src="https://www.soundjay.com/button/sounds/button-16.mp3" preload="auto"></audio>
+  <audio id="failSfx" src="https://www.soundjay.com/misc/sounds/fail-trombone-01.mp3" preload="auto"></audio>
+  <audio id="winSfx" src="https://www.soundjay.com/misc/sounds/magic-chime-01.mp3" preload="auto"></audio>
+  <audio id="wandSfx" src="https://www.soundjay.com/magic/sounds/magic-wand-01.mp3" preload="auto"></audio>
+
   <script>
-    const unlockDate = new Date('2025-10-28T00:00:00');
+    // --- CONFIG ---
+    const unlockDate = new Date('2025-10-27T00:00:00');
     const now = new Date();
 
+    // DOM
     const lockScreen = document.getElementById('lockScreen');
-    const gallery = document.getElementById('galleryContainer');
+    const gameWrap = document.getElementById('gameWrap');
+    const gameContainer = document.getElementById('gameContainer');
+    const circle = document.getElementById('circle');
+    const levelText = document.getElementById('levelText');
+    const uiTop = document.getElementById('uiTop');
+    const heartsWrap = document.getElementById('heartsWrap');
+    const levelBadge = document.getElementById('levelBadge');
+    const fortuneContainer = document.getElementById('fortuneContainer');
+    const fortuneText = document.getElementById('fortuneText');
+    const magicWand = document.getElementById('magicWand');
+    const winBurst = document.getElementById('winBurst');
 
+    // Audio
+    const bgMusic = document.getElementById('bgMusic');
+    const orbDing = document.getElementById('orbDing');
+    const orbClick = document.getElementById('orbClick');
+    const failSfx = document.getElementById('failSfx');
+    const winSfx = document.getElementById('winSfx');
+    const wandSfx = document.getElementById('wandSfx');
+
+    // Game state
+    const orbCount = 6;
+    let orbs = [];
+    let sequence = [];
+    let playerSequence = [];
+    let level = 1;
+    let mistakes = 0;
+    const maxLevels = 4;
+    let inputAllowed = false;
+    let playingSequence = false;
+
+    // show lock or game based on date
     if (now >= unlockDate) {
       lockScreen.style.display = 'none';
-      gallery.style.display = 'block';
+      showGame();
+    } else {
+      lockScreen.style.display = 'flex';
     }
 
-    const photos = [
-      { img: 'image.jpg', text: 'That smile, that’s my cuteeee paieeee 😉' },
-      { img: 'shid.jpg', text: 'I want to hug you as same as this image shows 🧡' },
-      { img: 'shid2.jpg', text: 'I think that’s our future! If I die someday, can you be my children’s Buddy Uncle? 😅' },
-      { img: 'shid3.jpg', text: 'That’s us in real life – Teddy 🧸 & Buddy 🧡' }
+    function showGame(){
+      // fade in music gently
+      try {
+        bgMusic.volume = 0;
+        bgMusic.play().catch(()=>{/* autoplay may block; ok */});
+        fadeAudio(bgMusic, 0, 0.6, 2000);
+      } catch(e){}
+
+      uiTop.style.display = 'flex';
+      gameWrap.style.display = 'flex';
+      setTimeout(()=>{ gameWrap.style.opacity=1; gameWrap.style.transform='none'; }, 30);
+      createOrbs();
+      setTimeout(()=>startLevel(), 700);
+    }
+
+    // create orb elements arranged in circle
+    function createOrbs(){
+      circle.innerHTML = '';
+      orbs = [];
+      const r = 120; // radius
+      for(let i=0;i<orbCount;i++){
+        const o = document.createElement('div');
+        o.className = 'orb';
+        o.dataset.index = i;
+        // position
+        const angle = (i / orbCount) * Math.PI * 2 - Math.PI/2;
+        const cx = (circle.clientWidth/2) + Math.cos(angle)*r - 37; // subtract half orb
+        const cy = (circle.clientHeight/2) + Math.sin(angle)*r - 37;
+        o.style.left = cx + 'px';
+        o.style.top = cy + 'px';
+        // attach
+        circle.appendChild(o);
+        orbs.push(o);
+        // click
+        o.addEventListener('click', ()=> handlePlayerClick(i));
+      }
+    }
+
+    // play level
+    function startLevel(){
+      inputAllowed = false;
+      playingSequence = true;
+      playerSequence = [];
+      levelBadge.textContent = `Level ${level}`;
+      levelText.textContent = `Level ${level} — Watch the sequence`;
+      // build sequence randomly for (level + 2) length
+      sequence = [];
+      for(let i=0;i<level+2;i++){
+        sequence.push(Math.floor(Math.random()*orbCount));
+      }
+      // play sequence with timing (faster each level)
+      const base = [800,650,550,450,350]; // ms per flash
+      const flashSpeed = base[Math.min(level-1, base.length-1)];
+      let i = 0;
+      const seqInterval = setInterval(()=>{
+        const idx = sequence[i];
+        flashOrb(idx, true);
+        i++;
+        if(i>=sequence.length){ clearInterval(seqInterval); playingSequence=false; setTimeout(()=>{ allowInput(); }, 550); }
+      }, flashSpeed);
+    }
+
+    // flash visual and play ding
+    function flashOrb(idx, playSound=false){
+      const el = orbs[idx];
+      if(!el) return;
+      el.classList.add('pulse');
+      // small particle burst at orb
+      createTinyBurstAt(el);
+      if(playSound) { playSoundSafe(orbDing, 0.9); }
+      setTimeout(()=> el.classList.remove('pulse'), 320);
+    }
+
+    // allow player input window
+    function allowInput(){
+      inputAllowed = true;
+      levelText.textContent = `Your turn — Repeat the sequence`;
+      // give a small timeout to start or count as fail
+      let started=false;
+      const startTimeout = setTimeout(()=>{
+        if(!started && inputAllowed){
+          // still allow; we won't auto-fail — keep it friendly
+        }
+      }, 900);
+    }
+
+    // handle player click
+    function handlePlayerClick(index){
+      if(!inputAllowed || playingSequence) return;
+      playerSequence.push(index);
+      // visual click
+      flashOrb(index, false);
+      playSoundSafe(orbClick, 0.8);
+      // check correctness
+      const pos = playerSequence.length-1;
+      if(sequence[pos] !== index){
+        // wrong
+        inputAllowed = false;
+        mistakes++;
+        showWrong(index);
+        if(mistakes >= 3){
+          // lost - cinematic fail
+          levelText.textContent = "Fir se try! You have exhausted your energy.";
+          playSoundSafe(failSfx, 1);
+          shakeHearts();
+          setTimeout(()=>{ resetGame(); }, 1200);
+          return;
+        } else {
+          // allow retry of current level after short pause
+          levelText.textContent = `Wrong! Try level ${level} again (Mistakes: ${mistakes}/3)`;
+          updateHearts();
+          playSoundSafe(failSfx, 0.9);
+          setTimeout(()=>{ playerSequence=[]; allowInput(); }, 900);
+          return;
+        }
+      } else {
+        // correct press
+        updateHearts(); // ensure hearts display remains
+        // if finished sequence
+        if(playerSequence.length === sequence.length){
+          // level cleared
+          inputAllowed = false;
+          playSoundSafe(winSfx, 0.9);
+          createLevelClearBurst();
+          if(level >= maxLevels){
+            // win game
+            setTimeout(()=> completeGame(), 1100);
+          } else {
+            level++;
+            levelText.textContent = `Level ${level-1} cleared! Prepare for next level...`;
+            setTimeout(()=> startLevel(), 1100);
+          }
+        } else {
+          // partial correct, continue
+        }
+      }
+    }
+
+    function showWrong(index){
+      const el = orbs[index];
+      if(!el) return;
+      el.classList.add('wrong');
+      setTimeout(()=> el.classList.remove('wrong'), 700);
+    }
+
+    // reset game on 3 mistakes
+    function resetGame(){
+      level = 1; mistakes = 0; playerSequence = []; sequence = [];
+      updateHearts();
+      createOrbs();
+      startLevel();
+    }
+
+    function updateHearts(){
+      const heartEls = [document.getElementById('heart1'), document.getElementById('heart2'), document.getElementById('heart3')];
+      for(let i=0;i<heartEls.length;i++){
+        heartEls[i].style.opacity = (i < (3-mistakes)) ? '1' : '0.18';
+        heartEls[i].style.transform = (i < (3-mistakes)) ? 'scale(1)' : 'scale(.9)';
+      }
+    }
+
+    function shakeHearts(){
+      heartsWrap.animate([{transform:'translateY(0)'},{transform:'translateY(-8px)'},{transform:'translateY(0)'}],{duration:400,iterations:1,easing:'ease-out'});
+    }
+
+    // create small burst when orb lights
+    function createTinyBurstAt(el){
+      const rect = el.getBoundingClientRect();
+      const cx = rect.left + rect.width/2;
+      const cy = rect.top + rect.height/2;
+      for(let i=0;i<7;i++){
+        const p = document.createElement('div');
+        p.className='particle';
+        p.style.width = p.style.height = (6 + Math.random()*8)+'px';
+        p.style.left = (cx + (Math.random()-0.5)*60) + 'px';
+        p.style.top = (cy + (Math.random()-0.5)*60) + 'px';
+        p.style.opacity = 0.95;
+        p.style.transform = `translate(-50%,-50%)`;
+        document.body.appendChild(p);
+        const dx = (Math.random()-0.5)*160;
+        const dy = (Math.random()-0.7)*-160;
+        p.animate([{transform:'translate(-50%,-50%) translate(0,0)', opacity:1},{transform:`translate(-50%,-50%) translate(${dx}px,${dy}px) scale(.6)`, opacity:0}],{duration:700+Math.random()*400,easing:'cubic-bezier(.2,.8,.2,1)'}).onfinish = ()=> p.remove();
+      }
+    }
+
+    // create a cinematic burst on level clear
+    function createLevelClearBurst(){
+      // do a gentle ring of particles
+      const center = circle.getBoundingClientRect();
+      const cx = center.left + center.width/2;
+      const cy = center.top + center.height/2;
+      for(let i=0;i<24;i++){
+        const p = document.createElement('div');
+        p.className='particle';
+        p.style.left = cx + 'px';
+        p.style.top = cy + 'px';
+        p.style.width = p.style.height = (6 + Math.random()*10) + 'px';
+        document.body.appendChild(p);
+        const ang = Math.random()*Math.PI*2;
+        const dist = 120 + Math.random()*120;
+        const dx = Math.cos(ang)*dist;
+        const dy = Math.sin(ang)*dist;
+        p.animate([{transform:'translate(-50%,-50%) translate(0,0)', opacity:1},{transform:`translate(-50%,-50%) translate(${dx}px,${dy}px) scale(.4)`, opacity:0}],{duration:900+Math.random()*600,easing:'cubic-bezier(.2,.8,.2,1)'}).onfinish = ()=> p.remove();
+      }
+    }
+
+    // complete game sequence (cinematic win)
+    function completeGame(){
+      inputAllowed = false;
+      playingSequence = false;
+      levelText.textContent = "✨ You’ve mastered the Circuit of Energy! ✨";
+      // fade out bgMusic slowly
+      fadeAudio(bgMusic, bgMusic.volume, 0, 1800);
+      // play win sfx
+      playSoundSafe(winSfx, 1.0);
+      // orbs rise and burst
+      for(let i=0;i<orbs.length;i++){
+        const o = orbs[i];
+        const rect = o.getBoundingClientRect();
+        const dx = (Math.random()-0.5)*40;
+        const anim = o.animate([{transform:'translateY(0px) scale(1)'},{transform:`translateY(-60px) translateX(${dx}px) scale(1.12)`, offset:0.6},{transform:'translateY(-160px) translateX(0px) scale(.6)'}],{duration:900+Math.random()*300,easing:'cubic-bezier(.2,.9,.2,1)'});
+        anim.onfinish = ()=> o.remove();
+      }
+      // big stardust explosion
+      setTimeout(()=> {
+        winBurst.classList.remove('hidden');
+        createMasterBurst();
+      }, 450);
+      // reveal fortune after short delay
+      setTimeout(()=> {
+        document.getElementById('gameWrap').style.display='none';
+        showFortune();
+      }, 1400);
+    }
+
+    function createMasterBurst(){
+      winBurst.innerHTML = '';
+      const center = circle.getBoundingClientRect();
+      const cx = center.left + center.width/2;
+      const cy = center.top + center.height/2;
+      for(let i=0;i<90;i++){
+        const p = document.createElement('div');
+        p.className='particle';
+        const size = 6 + Math.random()*14;
+        p.style.width = p.style.height = size + 'px';
+        p.style.left = cx + 'px';
+        p.style.top = cy + 'px';
+        winBurst.appendChild(p);
+        const ang = Math.random()*Math.PI*2;
+        const dist = 60 + Math.random()*420;
+        const dx = Math.cos(ang)*dist;
+        const dy = Math.sin(ang)*dist;
+        p.animate([{transform:'translate(-50%,-50%) translate(0,0)', opacity:1},{transform:`translate(-50%,-50%) translate(${dx}px,${dy}px) rotate(${Math.random()*720}deg) scale(.4)`, opacity:0}],{duration:1200+Math.random()*800,easing:'cubic-bezier(.2,.9,.1,1)'}).onfinish = ()=> p.remove();
+      }
+      // small delay then hide winBurst
+      setTimeout(()=> { winBurst.classList.add('hidden'); winBurst.innerHTML=''; }, 1600);
+    }
+
+    // show fortune section
+    function showFortune(){
+      fortuneContainer.style.display = 'flex';
+      setTimeout(()=> { fortuneContainer.classList.add('fadeIn'); fortuneContainer.style.opacity=1; fortuneContainer.style.transform='none'; }, 40);
+      // small glow on wand
+      magicWand.animate([{transform:'scale(1)'},{transform:'scale(1.06)'},{transform:'scale(1)'}],{duration:1000,iterations:1,easing:'ease-out'});
+      // show gentle text after click event
+      levelText.textContent = '';
+    }
+
+    // fortune logic (same set as before)
+    const fortunes = [
+      "1. You’ll always make me smile 💛",
+      "2. A surprise hug is coming your way 🧡",
+      "3. More laughter and fun adventures ahead 😄",
+      "4. You are being my favorite person until death💖",
+      "5. Every memory with you is magic ✨",
+      "6. Your smile brightens my day 🌟",
+      "7. We’ll create more beautiful stories together 🐻",
+      "8. You’re my lucky charm 🍀",
+      "9. You will always be my Forever partner in crime 😅",
+      "10. Special moments are coming your way 💫",
+      "11. We’re destined for endless joy together 🌈",
+      "12. We always find happiness in each other’s company 🥰",
+      "13. Unexpected blessings will come our way 🙌",
+      "14. Our bond grows stronger every day 💞",
+      "15. You are absolutely my one and only Budduu 🧸"
     ];
 
-    let current = 0;
-    const card = document.getElementById('photoCard');
-    const front = document.getElementById('frontPhoto');
-    const back = document.getElementById('backText').querySelector('p');
-    const backTitle = document.getElementById('backText').querySelector('h2');
-
-    front.style.backgroundImage = `url(${photos[0].img})`;
-    back.textContent = photos[0].text;
-
-    card.addEventListener('click', () => {
-      card.classList.toggle('flip');
+    magicWand.addEventListener('click', ()=>{
+      // small spin + sfx + reveal fortune letter-by-letter
+      wandSfx.currentTime = 0; wandSfx.play().catch(()=>{});
+      magicWand.classList.add('spin');
+      setTimeout(()=> magicWand.classList.remove('spin'), 900);
+      const randomIndex = Math.floor(Math.random()*fortunes.length);
+      const fortune = fortunes[randomIndex];
+      fortuneText.textContent = '';
+      fortuneText.style.opacity = 1;
+      // letter by letter
+      let i=0;
+      const int = setInterval(()=> {
+        fortuneText.textContent += fortune[i] || '';
+        i++;
+        if(i >= fortune.length) clearInterval(int);
+      }, 45);
     });
 
-    function nextPhoto() {
-      card.classList.remove('flip');
-      current = (current + 1) % photos.length;
-      setTimeout(() => {
-        front.style.backgroundImage = `url(${photos[current].img})`;
-        back.textContent = photos[current].text;
-        backTitle.textContent = `Message ${current + 1}`;
-      }, 500);
+    function goToDay82(){ window.location.href = 'day82.html'; }
+
+    // utils: safe play
+    function playSoundSafe(audioEl, vol=1){
+      try{
+        audioEl.volume = vol;
+        audioEl.currentTime = 0;
+        audioEl.play().catch(()=>{});
+      }catch(e){}
     }
 
-    function goToDay9() {
-      window.location.href = "day9.html";
+    // fade audio helper
+    function fadeAudio(el, from, to, duration){
+      const steps = 30;
+      const diff = to - from;
+      const stepTime = duration/steps;
+      let cur=0;
+      el.volume = from;
+      const t = setInterval(()=> {
+        cur++;
+        el.volume = Math.max(0, Math.min(1, from + diff*(cur/steps)));
+        if(cur>=steps){ clearInterval(t); if(to===0){ try{ el.pause(); }catch(e){} } }
+      }, stepTime);
     }
+
+    // cursor stardust
+    document.addEventListener('mousemove', (e)=>{
+      const s = document.createElement('div');
+      s.className='spark';
+      s.style.left = e.clientX + 'px';
+      s.style.top = e.clientY + 'px';
+      s.style.width = s.style.height = (4 + Math.random()*8) + 'px';
+      s.style.opacity = 0.9;
+      s.style.transform = `translate(-50%,-50%)`;
+      document.body.appendChild(s);
+      s.animate([{opacity:1, transform:'translate(-50%,-50%) scale(1)'},{opacity:0, transform:'translate(-50%,-50%) scale(.4)'}],{duration:700, easing:'cubic-bezier(.2,.8,.3,1)'}).onfinish = ()=> s.remove();
+    });
+
+    // initialize hearts visuals
+    updateHearts();
+
+    // minor: try to autoplay music if allowed
+    setTimeout(()=> {
+      try { bgMusic.play().catch(()=>{}); } catch(e){}
+    }, 800);
+
   </script>
-
 </body>
 </html>
-
-
