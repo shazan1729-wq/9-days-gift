@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Day 8 - Mini Memory Gallery 💖</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #f03f1b 10%, #42ffe0 30%, #fe22fa 70%, #eae608 100%);
+      background-size: 200% 200%;
+      animation: gradientMove 8s ease infinite;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      color: #fff;
+      position: relative;
+      text-align: center;
+    }
+
+    @keyframes gradientMove {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .gallery-container {
+      perspective: 1000px;
+      width: 300px;
+      height: 400px;
+      position: relative;
+    }
+
+    .photo-card {
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      transition: transform 1s;
+      transform-style: preserve-3d;
+      cursor: pointer;
+    }
+
+    .photo-card.flip {
+      transform: rotateY(180deg);
+    }
+
+    .front, .back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 15px;
+      backface-visibility: hidden;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+
+    .front {
+      background-size: cover;
+      background-position: center;
+    }
+
+    .back {
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      color: #fff;
+      text-align: center;
+      transform: rotateY(180deg);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .back h2 {
+      margin-bottom: 10px;
+      font-size: 1.3em;
+    }
+
+    .back p {
+      font-size: 1em;
+      line-height: 1.4em;
+    }
+
+    .next-btn {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      background:#fff;
+      color: #8e2de2;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .next-btn:hover {
+       background: #ff0080;
+    }
+
+    #photo-next { bottom: -60px; }
+    #day9-next {
+      bottom: -110px;
+      display: none; /* hidden initially */
+    }
+
+    h1 {
+      position: absolute;
+      top: 20px;
+      width: 100%;
+      font-size: 1.6em;
+      text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>💞 Mini Photo & Message Gallery 💞<br>flip it 💫</h1>
+
+  <div class="gallery-container">
+    <div class="photo-card" id="photoCard">
+      <div class="front" id="frontPhoto"></div>
+      <div class="back" id="backText">
+        <h2>Message 1</h2>
+        <p>Bus hamesha aaise hi haste rhna kabhi bhi mayuuss mat hona cahe kuch bhi ho jai , Promise kafr hamesha aaisa hi rhge 🤞🏼</p>
+      </div>
+    </div>
+    <button class="next-btn" id="photo-next" onclick="nextPhoto()">Next ➜</button>
+    <button class="next-btn" id="day9-next" onclick="goToDay9()">Go to Day 9 ➜</button>
+  </div>
+
+  <script>
+    const photos = [
+      { img: 'image.jpg', text: 'Bus hamesha aaise hi haste rhna kabhi bhi mayuuss mat hona cahe kuch bhi ho jai , Promise kafr hamesha aaisa hi rhge 🤞🏼 ' },
+      { img: 'shid.jpg', text: ' Mai isi tarha gale lagna chta hu real life me 🫱🏼🫲🏼' },
+      { img: 'shid2.jpg', text: 'Dekh ghussa mat hona par ek baat btani thi ki agar future me mai nhi rha or mere bacche rahe to kya tu unka Buddy Uncle banega ?' },
+      { img: 'shid3.jpg', text: 'Ye hum dono hai real life me hamesha aaisa hi rahege ek dusre ke saath or hamesha enjoy karege 💗' }
+    ];
+
+    let current = 0;
+    const card = document.getElementById('photoCard');
+    const front = document.getElementById('frontPhoto');
+    const back = document.getElementById('backText').querySelector('p');
+    const backTitle = document.getElementById('backText').querySelector('h2');
+    const nextBtn = document.getElementById('photo-next');
+    const day9Btn = document.getElementById('day9-next');
+
+    // Initialize first photo
+    front.style.backgroundImage = `url(${photos[0].img})`;
+    back.textContent = photos[0].text;
+
+    // Flip effect
+    card.addEventListener('click', () => {
+      card.classList.toggle('flip');
+    });
+
+    // Go to next photo
+    function nextPhoto() {
+      card.classList.remove('flip');
+      current++;
+      
+      if (current < photos.length) {
+        setTimeout(() => {
+          front.style.backgroundImage = `url(${photos[current].img})`;
+          back.textContent = photos[current].text;
+          backTitle.textContent = `Memory ${current + 1}`;
+        }, 500);
+      }
+
+      // when last photo is reached
+      if (current === photos.length - 1) {
+        nextBtn.textContent = "Last Memory 💖";
+      }
+
+      // when all photos are done
+      if (current === photos.length) {
+        nextBtn.style.display = "none";
+        day9Btn.style.display = "block";
+      }
+    }
+
+    // Go to next day
+    function goToDay9() {
+      window.location.href = "day9.html";
+    }
+  </script>
+
+</body>
+</html>
