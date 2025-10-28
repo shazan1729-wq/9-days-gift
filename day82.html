@@ -168,13 +168,13 @@
         setTimeout(() => {
           front.style.backgroundImage = `url(${photos[current].img})`;
           back.textContent = photos[current].text;
-          backTitle.textContent = `Memory ${current + 1}`;
+          backTitle.textContent = `Message ${current + 1}`;
         }, 500);
       }
 
       // when last photo is reached
       if (current === photos.length - 1) {
-        nextBtn.textContent = "Last Memory 💖";
+        nextBtn.textContent = "Last Message 💖";
       }
 
       // when all photos are done
