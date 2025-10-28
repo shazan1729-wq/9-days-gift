@@ -1,153 +1,349 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Day 9 | The Grand Finale ✨</title>
-  <style>
-    body {
-      margin: 0;
-      height: 100vh;
-      background: radial-gradient(circle at top, #1a237e, #000);
-      overflow: hidden;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      font-family: 'Poppins', sans-serif;
-      flex-direction: column;
-      text-align: center;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Day 9 | The Grand Finale Gift ✨</title>
+<style>
+  body {
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-family: 'Poppins', sans-serif;
+    flex-direction: column;
+    text-align: center;
+    background: linear-gradient(270deg, #ff89cc, #42ffe0, #f03f1b, #fe22fa, #eae608, #ff6a00);
+    background-size: 800% 800%;
+    animation: rainbowBG 20s ease infinite;
+  }
 
-    h1 {
-      font-size: 2.5rem;
-      color: #fff;
-      text-shadow: 0 0 20px #ffea00, 0 0 40px #ff6f00;
-      animation: glowText 3s infinite alternate;
-    }
+  @keyframes rainbowBG {
+    0% {background-position:0% 50%;}
+    50% {background-position:100% 50%;}
+    100% {background-position:0% 50%;}
+  }
 
-    @keyframes glowText {
-      from { text-shadow: 0 0 10px #ffea00, 0 0 20px #ff6f00; }
-      to { text-shadow: 0 0 30px #ffff00, 0 0 60px #ff3d00; }
-    }
+  h1 {
+    font-size: 2.5rem;
+    color: #c6eeec;
+    text-shadow: 0 0 20px #ff0000, 0 0 40px #66ff00;
+    animation: glowText 3s infinite alternate;
+  }
 
-    #story {
-      margin-top: 1.5rem;
-      font-size: 1.2rem;
-      width: 80%;
-      max-width: 700px;
-      white-space: pre-line;
-      line-height: 1.8;
-      opacity: 0;
-      transition: opacity 1s ease;
-    }
+  @keyframes glowText {
+    from { text-shadow: 0 0 10px #ff0000, 0 0 20px #ffbb00; }
+    to { text-shadow: 0 0 30px #ffff00, 0 0 60px #ff3d00; }
+  }
 
-    canvas {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: -1;
-    }
+  @keyframes textExplode {
+    0% { transform: scale(1); color: #fff;}
+    50% { transform: scale(1.3); color: #ff0;}
+    100% { transform: scale(1); color: #fff;}
+  }
 
-    #confetti {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      overflow: hidden;
-      z-index: 10;
-      pointer-events: none;
-    }
+  #story {
+    margin-top: 1.5rem;
+    font-size: 1.2rem;
+    width: 80%;
+    max-width: 700px;
+    white-space: pre-line;
+    line-height: 1.8;
+    opacity: 0;
+    transition: opacity 1s ease;
+  }
 
-    .confetti {
-      position: absolute;
-      width: 10px; height: 10px;
-      background: #fff;
-      animation: fall linear forwards;
-    }
+  canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    z-index: -1;
+  }
 
-    @keyframes fall {
-      0% { transform: translateY(-10%) rotate(0deg); opacity: 1; }
-      100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
-    }
+  #confetti {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    overflow: hidden;
+    z-index: 10;
+    pointer-events: none;
+  }
 
-    footer {
-      position: absolute;
-      bottom: 15px;
-      font-size: 0.9rem;
-      opacity: 0.7;
-    }
+  .confetti {
+    position: absolute;
+    width: 10px; height: 10px;
+    background: #0bdaa6;
+    animation: fall linear forwards;
+  }
 
-    /* Hidden by default */
-    #mainContent {
-      display: none;
-    }
+  @keyframes fall {
+    0% { transform: translateY(-10%) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+  }
 
-    /* Unlock message styling */
-    #lockedMessage {
-      font-size: 1.5rem;
-      color: #fff;
-      text-align: center;
-      padding: 20px;
-      line-height: 1.6;
-    }
-  </style>
+  footer {
+    position: absolute;
+    bottom: 15px;
+    font-size: 0.9rem;
+    opacity: 0.7;
+  }
+
+  /* Lock screen */
+  #lockScreen {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background:linear-gradient(135deg, #f03f1b 0%, #42ffe0 30%, #fe22fa 70%, #c9fe1c 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #f5f5f5;
+    text-shadow: 0px 0px 4px rgba(17, 0, 255, 0.5);
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    z-index: 9999;
+  }
+
+  #lockScreen input {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 10px;
+    text-align: center;
+  }
+
+  button {
+    background: linear-gradient(90deg,#ff89cc,#70a1ff 77%);
+    color: #fff;
+    padding: 18px 36px;
+    border-radius: 32px;
+    border: none;
+    font-size: 1.3em;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 8px 18px #fa68b880;
+    transition: transform 0.17s;
+    margin-top: 12px;
+  }
+
+  #lockScreen button:hover {
+    background:linear-gradient(90deg,#ff89cc,#70a1ff 77%);
+  }
+
+  /* Floating hearts/emojis */
+  .floating {
+    position: absolute;
+    font-size: 1.5rem;
+    animation: floatUp 5s linear infinite;
+    pointer-events: none;
+  }
+
+  @keyframes floatUp {
+    0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+    50% { opacity: 1; }
+    100% { transform: translateY(-50px) rotate(360deg); opacity: 0; }
+  }
+</style>
 </head>
 <body>
-  <div id="lockedMessage"></div>
 
-  <div id="mainContent">
-    <canvas id="fireworks"></canvas>
-    <div id="confetti"></div>
-    <h3>Day 9: The Grand Finale Gift ✨</h3>
-    <h1>💫 HAPPY BIRTHDAY MY DEAR BUDDUUUUUUUUU 🧡... 💫</h1>
-    <div id="story"></div>
-    <footer>Made with infinite 💛 by Tedduuu 🧸</footer>
-  </div>
+<!-- Lock screen -->
+<div id="lockScreen">
+  <h2>Enter Passcode 🔒</h2>
+  <h5><i> (Hint: A word which is related to us! )</i></h5>
+  <input type="password" id="passInput" placeholder="Enter passcode" />
+  <button onclick="unlock()">Enter to Celebrate 🎉🎊🥳</button>
+  <p id="errorMsg" style="color:  #fd0202; margin-top:10px;"></p>
+</div>
 
-  <script>
-    // Unlock date setup (October 29, 2025)
-    const unlockDate = new Date(2025, 9, 29);
-    const today = new Date();
+<canvas id="fireworks"></canvas>
+<div id="confetti"></div>
 
-    const lockedMsg = document.getElementById("lockedMessage");
-    const mainContent = document.getElementById("mainContent");
+<h3>Day 9: The Grand Finale Gift✨</h3>
+<h1 id="mainText"> 💫 HAPPY BIRTHDAY MY DEAREST BUDDUUUUUUUUU 🧡... 💫</h1>
+<div id="story"></div>
 
-    if (today < unlockDate) {
-      // Show only lock message
-      lockedMsg.innerHTML = "🔒 This page will unlock on <br><strong>" + unlockDate.toDateString() + "</strong>.<br><br>Come back soon!<br> For Grand Celebration 🎉🎂🥳";
-      document.body.style.background = " #E53935"
-    } else {
-      // Show main content
-      lockedMsg.style.display = "none";
-      mainContent.style.display = "flex";
-      showStory();
+<footer>Made with infinite 💛 by Tedduuu 🧸</footer>
+
+<!-- Fireworks sound -->
+<audio id="fireworkSound" src="firework.mp3" preload="auto"></audio>
+
+<script>
+// Lock function
+function unlock() {
+  const pass = document.getElementById("passInput").value.trim().toLowerCase();
+  if (pass === "brotherhood") {
+    document.getElementById("lockScreen").style.display = "none";
+    showStory();
+    startFloatingHearts();
+  } else {
+    document.getElementById("errorMsg").innerText = "Wrong passcode, try again!";
+  }
+}
+
+// Story typing
+const storyLines = [
+  "From day 1 to day 9, every moment was made with care 💫",
+  "Each page had a memory, each  line has smile 😊",
+
+  "Just efforts , just heart — no distance, just friendship 💛",
+  "You’re more than a best friend, Faizan — you’re my Budduu 🧡",
+  "Love you, Budduu 💖",
+
+  "You know how much you mean to me 🥹",
+  "🫱🏼🧡🧡🧡🧡🧡🧡🧡🧡🧡🧡 x 100000000000000🫲🏼 Itna sara ",
+  "I know words can’t express it all, but I hope this little gift shows a bit of how special you are to me 💞",
+  "I know I am childish sometimes , but you always understand me and support me, Thanlk you for being there always 🙏",
+  "Bus or kuch nahi , sorry jo kuch bhi maine phle kiya jisse tumhe kabhi bura laga ho , ya hurt hua ho, I am really sorry for that 🙇‍♂️",
+  "Thank you for being the amazing person you are, and for being my Budduu 🧡🧸",
+
+  "Here's to many more memories, laughter, and adventures ahead! 🎉",
+  "Happy Birthday once again my dearest Budduu! 🥳🎂🧡"
+];
+
+let index = 0;
+
+function showStory() {
+  if (index < storyLines.length) {
+    const story = document.getElementById("story");
+    story.style.opacity = 1;
+    story.innerHTML += storyLines[index] + "\n";
+    index++;
+    setTimeout(showStory, 2500);
+  } else {
+    explodeText();
+    startFireworks();
+    startConfetti();
+  }
+}
+
+// Text explosion
+function explodeText() {
+  const mainText = document.getElementById('mainText');
+  mainText.classList.add('explode');
+}
+
+// Floating hearts/emojis
+function startFloatingHearts() {
+  const emojis = ['🧡','🧸','🎉','✨','🥳','💞'];
+  for(let i=0;i<100;i++){
+    const span = document.createElement('span');
+    span.classList.add('floating');
+    span.innerText = emojis[Math.floor(Math.random()*emojis.length)];
+    span.style.left = Math.random()*100+'%';
+    span.style.animationDuration = (3+Math.random()*8)+'s';
+    document.body.appendChild(span);
+  }
+}
+
+// Glitter trail
+document.addEventListener('mousemove', e => {
+  const sparkle = document.createElement('div');
+  sparkle.style.position = 'absolute';
+  sparkle.style.width = '6px';
+  sparkle.style.height = '6px';
+  sparkle.style.background = 'gold';
+  sparkle.style.borderRadius = '50%';
+  sparkle.style.left = e.pageX+'px';
+  sparkle.style.top = e.pageY+'px';
+  sparkle.style.pointerEvents = 'none';
+  sparkle.style.opacity = '1';
+  sparkle.style.transition = 'all 0.7s ease-out';
+  document.body.appendChild(sparkle);
+  setTimeout(()=>sparkle.remove(),700);
+});
+
+// Fireworks effect
+const canvas = document.getElementById("fireworks");
+const ctx = canvas.getContext("2d");
+canvas.width = innerWidth;
+canvas.height = innerHeight;
+let fireworks = [];
+
+class Firework {
+  constructor(x, y, color) {
+    this.x = x;
+    this.y = y;
+    this.particles = [];
+    for (let i = 0; i < 30; i++) {
+      const angle = (Math.PI * 2 * i) / 30;
+      const speed = Math.random() * 4 + 2;
+      this.particles.push({
+        x, y,
+        dx: Math.cos(angle) * speed,
+        dy: Math.sin(angle) * speed,
+        life: 100,
+        color
+      });
     }
+    // Play sound
+    const sound = document.getElementById('fireworkSound');
+    sound.currentTime = 0;
+    sound.volume = 0.2;
+    sound.play();
+  }
 
-    // Story typing
-    const storyLines = [
-      "From day 1 to day 9, every moment was made with care 💫",
-      "Each page had a memory, each line has smile 😊",
-      "No money, just heart — no distance, just friendship 💛",
-      "You’re more than a best friend, Faizan — you’re my Budduu 💖",
-      "Love you, Budduu 💖"
-    ];
+  update() {
+    this.particles.forEach(p => {
+      p.x += p.dx;
+      p.y += p.dy;
+      p.dy += 0.05;
+      p.life -= 1;
+    });
+    this.particles = this.particles.filter(p => p.life > 0);
+  }
 
-    let index = 0;
+  draw() {
+    this.particles.forEach(p => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+      ctx.fillStyle = p.color;
+      ctx.fill();
+    });
+  }
+}
 
-    function showStory() {
-      if (index < storyLines.length) {
-        const story = document.getElementById("story");
-        story.style.opacity = 1;
-        story.innerHTML += storyLines[index] + "\n";
-        index++;
-        setTimeout(showStory, 2500);
-      } else {
-        // Start fireworks/confetti after story
-        // startFireworks();
-        // startConfetti();
-      }
-    }
-  </script>
+function startFireworks() {
+  setInterval(() => {
+    const x = Math.random() * canvas.width;
+    const y = Math.random() * canvas.height / 2;
+    const color = `hsl(${Math.random() * 360}, 100%, 60%)`;
+    fireworks.push(new Firework(x, y, color));
+  }, 500);
+
+  animateFireworks();
+}
+
+function animateFireworks() {
+  ctx.fillStyle = "rgba(0,0,0,0.1)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  fireworks.forEach(fw => {
+    fw.update();
+    fw.draw();
+  });
+  fireworks = fireworks.filter(fw => fw.particles.length > 0);
+
+  requestAnimationFrame(animateFireworks);
+}
+
+// Confetti animation
+function startConfetti() {
+  const confettiContainer = document.getElementById("confetti");
+  for (let i = 0; i < 120; i++) {
+    const conf = document.createElement("div");
+    conf.classList.add("confetti");
+    conf.style.backgroundColor = `hsl(${Math.random() * 360},100%,70%)`;
+    conf.style.left = Math.random() * 100 + "%";
+    conf.style.animationDuration = 3 + Math.random() * 3 + "s";
+    conf.style.animationDelay = Math.random() * 2 + "s";
+    confettiContainer.appendChild(conf);
+  }
+}
+</script>
 </body>
 </html>
-
